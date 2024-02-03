@@ -1,0 +1,13 @@
+#!/usr/bin/env php
+<?php
+
+require_once 'vendor/autoload.php';
+
+use PeclExtension\PeclCommands;
+use Solital\Core\Console\Command;
+
+/* $class_commands = [
+    PeclCommands::class
+]; */
+
+(new Command([PeclCommands::class]))->read($argv[1], $argv);

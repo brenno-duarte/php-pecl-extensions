@@ -1,0 +1,11 @@
+DLL Files:
+  APCu: https://github.com/krakjoe/apcu
+  Memcached: https://github.com/lifenglsf/php_memcached_dll
+  Memcache: https://github.com/nono303/PHP-memcache-dll
+  Timezonedb: https://github.com/php/pecl-datetime-timezonedb
+
+Binary:
+  Memcached: https://github.com/jefyt/memcached-windows
+
+Composer:
+  Winkill: maximgrynykha/winkill

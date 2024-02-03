@@ -1,0 +1,35 @@
+{
+    "require": {
+        "php": "^8.3",
+        "ext-curl": "*",
+        "ext-openssl": "*",
+        "ext-hash": "*",
+        "paragonie/sodium_compat": "^1.20",
+        "matomo/ini": "^3.0",
+        "phpspec/php-diff": "^1.1",
+        "lupecode/php-trader-native": "^2.1",
+        "solital/vinci-console": "^4.0",
+        "symfony/filesystem": "^7.0",
+        "symfony/finder": "^7.0",
+        "yetanotherape/diff-match-patch": "^1.1",
+        "sebastian/diff": "^5.1"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^10.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "PeclPolyfill\\": "lib/",
+            "PeclExtension\\": "src/"
+        },
+        "files": [
+            "functions.php"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "PeclPolyfillTest\\": "tests/"
+        }
+    },
+    "bin": "pecl"
+}
