@@ -1,150 +1,36 @@
 <?php
 
 /**
- * runkit_import() flag indicating that normal functions should be imported
- * from the specified file.
- *
- * @var integer
+ * OAUTH
  */
-define('RUNKIT_IMPORT_FUNCTIONS', 1);
+if (!function_exists('oauth_get_sbs')) {
+    define("OAUTH_USER_AGENT", "PECL-OAuth/0.1-unpecl");
+    define("OAUTH_MAX_HEADER_LEN", 512);
 
-/**
- * runkit_import() flag indicating that class methods should be imported
- * from the specified file.
- *
- * @var integer
- */
-define('RUNKIT_IMPORT_CLASS_METHODS', 2);
+    define("OAUTH_AUTH_TYPE_URI", 0x01);
+    define("OAUTH_AUTH_TYPE_FORM", 0x02);
+    define("OAUTH_AUTH_TYPE_AUTHORIZATION", 0x03);
+    define("OAUTH_AUTH_TYPE_NONE", 0x04);
 
-/**
- * runkit_import() flag indicating that class constants should be imported
- * from the specified file. Note that this flag is only meaningful in PHP
- * versions 5.1.0 and above.
- *
- * @var integer
- */
-define('RUNKIT_IMPORT_CLASS_CONSTS', 4);
+    define("OAUTH_SIG_METHOD_HMACSHA1", "HMAC-SHA1");
+    define("OAUTH_SIG_METHOD_HMACSHA256", "HMAC-SHA256");
+    define("OAUTH_SIG_METHOD_RSASHA1", "RSA-SHA1");
+    define("OAUTH_SIG_METHOD_PLAINTEXT", "PLAINTEXT");
 
-/**
- * runkit_import() flag indicating that class standard properties should be
- * imported from the specified file.
- *
- * @var integer
- */
-define('RUNKIT_IMPORT_CLASS_PROPS', 8);
+    define("OAUTH_HTTP_METHOD_GET", "GET");
+    define("OAUTH_HTTP_METHOD_POST", "POST");
+    define("OAUTH_HTTP_METHOD_PUT", "PUT");
+    define("OAUTH_HTTP_METHOD_HEAD", "HEAD");
+    define("OAUTH_HTTP_METHOD_DELETE", "DELETE");
 
-/**
- * runkit_import() flag indicating that class static properties should be
- * imported from the specified file.
- *
- * @var integer
- */
-define('RUNKIT_IMPORT_CLASS_STATIC_PROPS', 10);
+    define("OAUTH_REQENGINE_STREAMS", 1);
+    define("OAUTH_REQENGINE_CURL", 2);
 
-/**
- * runkit_import() flag representing a bitwise OR of the RUNKIT_IMPORT_CLASS_*
- * constants.
- *
- * @var integer
- */
-define('RUNKIT_IMPORT_CLASSES', (
-    RUNKIT_IMPORT_CLASS_METHODS
-    | RUNKIT_IMPORT_CLASS_CONSTS
-    | RUNKIT_IMPORT_CLASS_PROPS
-    | RUNKIT_IMPORT_CLASS_STATIC_PROPS
-));
-
-/**
- * runkit_import() flag indicating that if any of the imported functions,
- * methods, constants, or properties already exist, they should be replaced
- * with the new definitions. If this flag is not set, then any imported
- * definitions which already exist will be discarded.
- *
- * @var integer
- */
-define('RUNKIT_IMPORT_OVERRIDE', 20);
-
-/**
- * PHP 5 specific flag to runkit_method_add()
- *
- * @var integer
- */
-define('RUNKIT_ACC_PUBLIC', 256);
-
-/**
- * PHP 5 specific flag to runkit_method_add()
- *
- * @var integer
- */
-define('RUNKIT_ACC_PROTECTED', 512);
-
-/**
- * PHP 5 specific flag to runkit_method_add()
- *
- * @var integer
- */
-define('RUNKIT_ACC_PRIVATE', 1024);
-
-/**
- * PHP 5 specific flag to runkit_method_add()
- *
- * @var integer
- */
-define('RUNKIT_ACC_STATIC', 1);
-
-/**
- * PHP 5 specific flag to runkit_method_add()
- *
- * @var integer
- */
-define('RUNKIT_ACC_RETURN_REFERENCE', 0x4000000);
-
-/**
- * PHP 5 specific flag to classkit_method_add() Only defined when classkit
- * compatibility is enabled.
- *
- * @var integer
- */
-define('CLASSKIT_ACC_PUBLIC', 256);
-
-/**
- * PHP 5 specific flag to classkit_method_add() Only defined when classkit
- * compatibility is enabled.
- *
- * @var integer
- */
-define('CLASSKIT_ACC_PROTECTED', 512);
-
-/**
- * PHP 5 specific flag to classkit_method_add() Only defined when classkit
- * compatibility is enabled.
- *
- * @var integer
- */
-define('CLASSKIT_ACC_PRIVATE', 1024);
-
-/**
- * PHP 5 specific flag to classkit_import() Only defined when classkit
- * compatibility is enabled.
- *
- * @var integer
- */
-define('CLASSKIT_AGGREGATE_OVERRIDE', 32);
-
-/**
- * Defined to the current version of the runkit package.
- *
- * @var integer
- */
-define('RUNKIT_VERSION', '1.0.4-dev');
-
-/**
- * Defined to the current version of the runkit package. Only defined when
- * classkit compatibility is enabled.
- *
- * @var integer
- */
-define('CLASSKIT_VERSION', '1.0.4-dev');
+    define("OAUTH_SSLCHECK_NONE", 0x00);
+    define("OAUTH_SSLCHECK_HOST", 0x01);
+    define("OAUTH_SSLCHECK_PEER", 0x02);
+    define("OAUTH_SSLCHECK_BOTH", 0x03);
+}
 
 /**
  * VAR REPRESENTATION

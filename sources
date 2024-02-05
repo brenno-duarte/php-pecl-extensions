@@ -9,3 +9,5 @@ Binary:
 
 Composer:
   Winkill: maximgrynykha/winkill
+  Base58: https://github.com/stephen-hill/base58php
+  phpClassEditor: https://github.com/elkaadka/phpClassEditor

@@ -1,4 +1,5 @@
 .phpunit.cache
+composer.lock
 vendor/
 foo.ini
 index.php
@@ -6,3 +7,4 @@ index2.php
 test.yaml
 test.php
 test2.php
+classTest.php

@@ -47,7 +47,7 @@ class PeclExtension
      */
     private array $extensions_with_polyfill = [
         'hrtime', 'igbinary', 'oauth', 'simdjson', 'sodium',
-        'ssdeep', 'uopz' ,'var_representation', 'xxtea', 
+        'ssdeep', 'uopz', 'var_representation', 'xxtea',
         'xdiff', 'yac', 'yaconf', 'yaml'
     ];
 
@@ -112,7 +112,7 @@ class PeclExtension
             return true;
         }
 
-        $this->error($name . ': extension not found')->print();
+        $this->error($name . ': extension not found for your PHP version')->print();
         return false;
     }
 
