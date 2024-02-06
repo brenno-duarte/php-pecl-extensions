@@ -1,4 +1,6 @@
 {
+    "name": "brenno-duarte/php-pecl-extensions",
+    "description": "A collection of pollyfills and DLL files for those who don't have PECL installed",
     "require": {
         "php": "^8.3",
         "ext-curl": "*",
