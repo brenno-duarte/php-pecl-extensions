@@ -46,7 +46,7 @@ class PeclExtension
      * @var array
      */
     private array $extensions_with_polyfill = [
-        'hrtime', 'igbinary', 'oauth', 'simdjson', 'sodium',
+        'base58', 'hrtime', 'igbinary', 'oauth', 'scrypt', 'simdjson', 'sodium',
         'ssdeep', 'uopz', 'var_representation', 'xxtea',
         'xdiff', 'yac', 'yaconf', 'yaml'
     ];

@@ -1,7 +1,16 @@
 <?php
 
 if (!function_exists('oauth_get_sbs')) {
-    function oauth_get_sbs($http_method, $uri, $request_parameters = null)
+    /**
+     * Generate a Signature Base String
+     *
+     * @param string $http_method
+     * @param string $uri
+     * @param array $request_parameters
+     * 
+     * @return string
+     */
+    function oauth_get_sbs(string $http_method, string $uri, ?array $request_parameters = null)
     {
         $request_parameters = ($request_parameters === null ? array() : $request_parameters);
         if (!is_array($request_parameters)) {
@@ -39,7 +48,11 @@ if (!function_exists('oauth_get_sbs')) {
         return $http_method . '&' . oauth_urlencode($uriBase) . '&' . oauth_urlencode($param_str);
     }
 
-    function oauth_urlencode($uri)
+    /**
+     * Encode a URI to RFC 3986
+     * @param string $uri
+     */
+    function oauth_urlencode(string $uri)
     {
         return rawurlencode($uri);
     }

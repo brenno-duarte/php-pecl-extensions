@@ -1,10 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace Winkill\Kernel\OS\Windows;
+namespace PeclExtension\Process\Winkill\Kernel\OS\Windows;
 
-use Winkill\Kernel\Exception\NonexistentProcessAttribute;
-use Winkill\Kernel\Interface\Process;
-use Winkill\Kernel\OS\Common\Comparison;
+use PeclExtension\Process\Winkill\Kernel\Exception\NonexistentProcessAttribute;
+use PeclExtension\Process\Winkill\Kernel\Interface\Process;
+use PeclExtension\Process\Winkill\Kernel\OS\Common\Comparison;
 
 final class WindowsProcess implements Process, \Stringable
 {

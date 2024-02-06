@@ -3,6 +3,7 @@
 namespace PeclExtension\Process;
 
 use PeclExtension\PeclExtension;
+use PeclExtension\Process\Winkill\Kernel\Interface\Exception;
 use PeclExtension\Process\Winkill\Winkill;
 
 class Process
@@ -67,7 +68,7 @@ class Process
             if (is_array($selected)) {
                 return true;
             }
-        } catch (\Winkill\Kernel\Interface\Exception | \Throwable $throwable) {
+        } catch (Exception | \Throwable $throwable) {
             die($throwable->getMessage());
         }
 

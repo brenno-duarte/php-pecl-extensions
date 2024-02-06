@@ -5,8 +5,10 @@ require_once 'vendor/autoload.php';
 require_once 'constants.php';
 require_once 'oauth.php';
 require_once 'statistic.php';
+require_once 'uopz.php';
 
 use PeclPolyfill\Functions\Base58\Base58;
+use PeclPolyfill\Functions\Scrypt\Scrypt;
 use PeclPolyfill\Functions\Simdjson\Simdjson;
 use PeclPolyfill\Functions\Xdiff\Xdiff;
 use PeclPolyfill\Functions\Ssdeep\{SequenceMatcher, Utils};
@@ -100,8 +102,9 @@ if (!function_exists('ssdeep_fuzzy_hash_filename')) {
         }
 
         $to_hash = basename($file_name);
-        $secret_key = md5($to_hash);
-        return hash_hmac('sha256', $to_hash, $secret_key);
+        return ssdeep_fuzzy_hash($to_hash);
+        /* $secret_key = md5($to_hash);
+        return hash_hmac('sha256', $to_hash, $secret_key); */
     }
 }
 
@@ -218,5 +221,15 @@ if (!function_exists('simdjson_key_value')) {
     function simdjson_key_value(string $json, string $key, bool $associative = false, int $depth = 512)
     {
         return Simdjson::simdjsonKeyValue($json, $key, $associative, $depth);
+    }
+}
+
+/**
+ * SCRYPT -----------------------------------------------------------------------------------
+ */
+if (!extension_loaded('Scrypt')) {
+    function scrypt(string $password, string $salt, int $n, int $r, int $p, int $length)
+    {
+        return bin2hex(Scrypt::calc($password, $salt, $n, $r, $p, $length));
     }
 }

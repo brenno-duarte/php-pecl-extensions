@@ -2,18 +2,18 @@
 
 namespace PeclExtension\Process\Winkill\Kernel;
 
-use Winkill\Kernel\Exception\{
+use PeclExtension\Process\Winkill\Kernel\Exception\{
     ProcessTerminationFailure,
     ProcessParsingFailure,
     SystemScanningFailure,
     UnsupportedComparisonOperator
 };
-use Winkill\Kernel\Interface\{
+use PeclExtension\Process\Winkill\Kernel\Interface\{
     Configuration,
     Process,
     ProcessTermination,
 };
-use Winkill\Kernel\OS\Common\Comparison;
+use PeclExtension\Process\Winkill\Kernel\OS\Common\Comparison;
 
 /**
  * Builder Pattern + Facade Pattern*

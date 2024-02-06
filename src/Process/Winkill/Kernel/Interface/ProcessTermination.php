@@ -2,7 +2,7 @@
 
 namespace PeclExtension\Process\Winkill\Kernel\Interface;
 
-use Winkill\Kernel\Exception\ProcessTerminationFailure;
+use PeclExtension\Process\Winkill\Kernel\Exception\ProcessTerminationFailure;
 
 /**
  * Strategy Pattern

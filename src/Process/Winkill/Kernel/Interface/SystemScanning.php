@@ -2,7 +2,7 @@
 
 namespace PeclExtension\Process\Winkill\Kernel\Interface;
 
-use Winkill\Kernel\Exception\SystemScanningFailure;
+use PeclExtension\Process\Winkill\Kernel\Exception\SystemScanningFailure;
 
 /**
  * Strategy Pattern

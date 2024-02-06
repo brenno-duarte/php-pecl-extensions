@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace Winkill\Kernel\OS\Windows\Execution\Termination;
+namespace PeclExtension\Process\Winkill\Kernel\OS\Windows\Execution\Termination;
 
-use Winkill\Kernel\Exception\ProcessTerminationFailure;
-use Winkill\Kernel\Interface\{Process, ProcessTermination};
+use PeclExtension\Process\Winkill\Kernel\Exception\ProcessTerminationFailure;
+use PeclExtension\Process\Winkill\Kernel\Interface\{Process, ProcessTermination};
 
 final class WindowsProcessTerminationById implements ProcessTermination
 {

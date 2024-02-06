@@ -2,10 +2,10 @@
 
 namespace PeclExtension\Process\Winkill;
 
-use Winkill\Kernel\Exception\{UnknownOperatingSystem, UnsupportedOperatingSystem};
-use Winkill\Kernel\Interface\Configuration;
-use Winkill\Kernel\OS\Windows\WindowsConfiguration;
-use Winkill\Kernel\Processes;
+use PeclExtension\Process\Winkill\Kernel\Exception\{UnknownOperatingSystem, UnsupportedOperatingSystem};
+use PeclExtension\Process\Winkill\Kernel\Interface\Configuration;
+use PeclExtension\Process\Winkill\Kernel\OS\Windows\WindowsConfiguration;
+use PeclExtension\Process\Winkill\Kernel\Processes;
 
 final class Winkill
 {

@@ -2,8 +2,8 @@
 
 namespace PeclExtension\Process\Winkill\Kernel\OS\Common;
 
-use Winkill\Kernel\Exception\UncachedStrategy;
-use Winkill\Kernel\Interface\{
+use PeclExtension\Process\Winkill\Kernel\Exception\UncachedStrategy;
+use PeclExtension\Process\Winkill\Kernel\Interface\{
     ProcessParsing,
     ProcessTermination,
     SystemScanning

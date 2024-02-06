@@ -33,9 +33,16 @@ if (!function_exists('oauth_get_sbs')) {
 }
 
 /**
+ * SSDEEP
+ */
+if (!defined('PHP_SSDEEP_VERSION')) {
+    define('PHP_SSDEEP_VERSION', '1.0.4"');
+    define('PHP_SSDEEP_EXTNAME', 'ssdeep');
+}
+
+/**
  * VAR REPRESENTATION
  */
-
 if (!defined('VAR_REPRESENTATION_SINGLE_LINE')) {
     define('VAR_REPRESENTATION_SINGLE_LINE', 1);
 }
@@ -46,7 +53,6 @@ if (!defined('VAR_REPRESENTATION_UNESCAPED')) {
 /**
  * YAC COMPONENT
  */
-
 if (!defined('YAC_VERSION')) {
     define('YAC_VERSION', '2.3.1');
 }

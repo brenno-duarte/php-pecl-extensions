@@ -3,6 +3,8 @@ DLL Files:
   Memcached: https://github.com/lifenglsf/php_memcached_dll
   Memcache: https://github.com/nono303/PHP-memcache-dll
   Timezonedb: https://github.com/php/pecl-datetime-timezonedb
+  Redis: https://github.com/dk-sirk/phpredis-windows-release
+  Solr: https://github.com/php/pecl-search_engine-solr
 
 Binary:
   Memcached: https://github.com/jefyt/memcached-windows
@@ -11,3 +13,5 @@ Composer:
   Winkill: maximgrynykha/winkill
   Base58: https://github.com/stephen-hill/base58php
   phpClassEditor: https://github.com/elkaadka/phpClassEditor
+  Stats: https://github.com/maherio/phpstats
+  Scrypt: https://github.com/windlace/scrypt

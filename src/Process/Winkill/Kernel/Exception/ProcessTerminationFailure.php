@@ -2,7 +2,7 @@
 
 namespace PeclExtension\Process\Winkill\Kernel\Exception;
 
-use Winkill\Kernel\Interface\{Exception, Process};
+use PeclExtension\Process\Winkill\Kernel\Interface\{Exception, Process};
 
 final class ProcessTerminationFailure extends \LogicException implements Exception
 {

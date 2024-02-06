@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace Winkill\Kernel\OS\Windows\Execution;
+namespace PeclExtension\Process\Winkill\Kernel\OS\Windows\Execution;
 
-use Winkill\Kernel\Exception\SystemScanningFailure;
-use Winkill\Kernel\Interface\SystemScanning;
+use PeclExtension\Process\Winkill\Kernel\Exception\SystemScanningFailure;
+use PeclExtension\Process\Winkill\Kernel\Interface\SystemScanning;
 
 final class WindowsSystemScanning implements SystemScanning
 {

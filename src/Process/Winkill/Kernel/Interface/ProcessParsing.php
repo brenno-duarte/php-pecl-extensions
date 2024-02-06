@@ -2,7 +2,7 @@
 
 namespace PeclExtension\Process\Winkill\Kernel\Interface;
 
-use Winkill\Kernel\Exception\ProcessParsingFailure;
+use PeclExtension\Process\Winkill\Kernel\Exception\ProcessParsingFailure;
 
 /**
  * Strategy Pattern + Factory Method Pattern

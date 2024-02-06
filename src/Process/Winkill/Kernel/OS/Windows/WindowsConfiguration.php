@@ -1,15 +1,15 @@
 <?php declare(strict_types=1);
 
-namespace Winkill\Kernel\OS\Windows;
+namespace PeclExtension\Process\Winkill\Kernel\OS\Windows;
 
-use Winkill\Kernel\Interface\{
+use PeclExtension\Process\Winkill\Kernel\Interface\{
     Configuration,
     ProcessTermination,
     ProcessParsing,
     SystemScanning
 };
-use Winkill\Kernel\OS\Common\Configuration as CachedConfiguration;
-use Winkill\Kernel\OS\Windows\Execution\{
+use PeclExtension\Process\Winkill\Kernel\OS\Common\Configuration as CachedConfiguration;
+use PeclExtension\Process\Winkill\Kernel\OS\Windows\Execution\{
     Termination\WindowsProcessTerminationById,
     WindowsProcessParsing,
     WindowsSystemScanning

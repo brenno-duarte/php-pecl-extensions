@@ -2,8 +2,8 @@
 
 namespace PeclExtension\Process\Winkill\Kernel\Exception;
 
-use Winkill\Kernel\Interface\Exception;
-use Winkill\Kernel\OS\Common\Comparison;
+use PeclExtension\Process\Winkill\Kernel\Interface\Exception;
+use PeclExtension\Process\Winkill\Kernel\OS\Common\Comparison;
 
 final class UnsupportedComparisonOperator extends \InvalidArgumentException implements Exception
 {

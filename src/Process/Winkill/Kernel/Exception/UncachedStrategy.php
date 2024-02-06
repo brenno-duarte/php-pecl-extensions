@@ -2,7 +2,7 @@
 
 namespace PeclExtension\Process\Winkill\Kernel\Exception;
 
-use Winkill\Kernel\Interface\Exception;
+use PeclExtension\Process\Winkill\Kernel\Interface\Exception;
 
 final class UncachedStrategy extends \OutOfBoundsException implements Exception
 {
