@@ -34,6 +34,10 @@ class StatusExtension extends Command implements CommandInterface
      */
     public function handle(object $arguments, object $options): mixed
     {
+        if (!isset($arguments->ext_name)) {
+            $this->error('You must enter the name of the extension')->print()->exit();
+        }
+        
         $pecl = new PeclExtension();
         $pecl->statusExtension($arguments->ext_name);
 

@@ -34,6 +34,10 @@ class Service extends Command implements CommandInterface
      */
     public function handle(object $arguments, object $options): mixed
     {
+        if (!isset($arguments->bin_name)) {
+            $this->error('You must enter the name of the service')->print()->exit();
+        }
+
         $pecl = new PeclExtension();
 
         if (!isset($arguments->bin_name)) {

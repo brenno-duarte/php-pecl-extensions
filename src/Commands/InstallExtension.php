@@ -34,6 +34,10 @@ class InstallExtension extends Command implements CommandInterface
      */
     public function handle(object $arguments, object $options): mixed
     {
+        if (!isset($arguments->ext_name)) {
+            $this->error('You must enter the name of the extension')->print()->exit();
+        }
+        
         $pecl = new PeclExtension();
 
         if ($pecl->isPolyfillExists($arguments->ext_name) == true) {
