@@ -1,0 +1,9 @@
+<?php
+
+namespace Kirra\Polyfill\Translit;
+
+/**
+ * @internal
+ */
+final class Translit {
+	private static $filters = [

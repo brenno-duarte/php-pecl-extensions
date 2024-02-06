@@ -22,10 +22,11 @@ class Yac
     }
 
     /**
-     * 添加键值对
-     * @param string $keys 键名
-     * @param mixed $value 键值
-     * @param int $ttl 有效期
+     * Add key-value pairs
+     * 
+     * @param string $keys
+     * @param mixed $value
+     * @param int $ttl
      * @return bool
      */
     public function add(string $keys, mixed $value, int $ttl = 0): bool
@@ -39,12 +40,13 @@ class Yac
     }
 
     /**
-     * 设置键值
-     * @param array|string $keys 键名或键值对
-     * @param mixed $value 键值
-     * @param int $ttl 有效期
+     * Set key value
+     * 
+     * @param array|string $keys Key name or key-value pair
+     * @param mixed $value key value
+     * @param int $ttl Validity period
+     * 
      * @return bool
-     * @example
      */
     public function set(array|string $keys, mixed $value, int $ttl = 0): bool
     {
@@ -57,10 +59,12 @@ class Yac
     }
 
     /**
-     * 设置键值的魔术方法
-     * @example $yac->goods = 'apple';//相当于$yac->set('goods', 'apple');
-     * @param string $key 键
-     * @param mixed $value 值
+     * Magic method to set key value
+     * 
+     * @example $yac->goods = 'apple'; | Equivalent to $yac->set('goods', 'apple');
+     * @param string $key
+     * @param mixed $value
+     * 
      * @return bool
      */
     public function __set(string $key, mixed $value)
@@ -69,9 +73,10 @@ class Yac
     }
 
     /**
-     * 获取某个键的值或某些键的值
-     * @param string|array $key 键名
-     * @return mixed 成功时mixed，失败时false
+     * Get the value of a key or the values of some keys
+     * 
+     * @param string|array $key Key name
+     * @return mixed when successful => mixed | on failure => false
      * @example $yac->get('goods');
      * $yac->get(array('goods', 'test'));
      */
@@ -85,10 +90,11 @@ class Yac
     }
 
     /**
-     * 获取某个键值的魔术方法
-     * @example return $yac->goods;//相当于$yac->get('goods')
-     * @param string $keys 键名
-     * @return mixed 成功时mixed，失败时false
+     * Magic method to get a key value
+     * 
+     * @example return $yac->goods; | Equivalent to $yac->get('goods')
+     * @param string $keys
+     * @return mixed when successful => mixed | on failure => false
      */
     public function __get(string $keys)
     {
@@ -96,9 +102,10 @@ class Yac
     }
 
     /**
-     * 删除某个键或某几个键
-     * @param mixed $keys 要删除的键
-     * @param int $ttl 延迟删除时间
+     * Delete a key or keys
+     * 
+     * @param mixed $keys
+     * @param int $ttl
      * @return bool
      * @example $yac->delete('goods');
      * $yac->delete(array('goods', 'test'));
@@ -114,7 +121,8 @@ class Yac
     }
 
     /**
-     * 刷新缓存，即清空缓存
+     * Refresh the cache, that is, clear the cache
+     * 
      * @return bool
      * @example
      */
@@ -132,7 +140,8 @@ class Yac
     }
 
     /**
-     * 获取缓存使用情况等信息
+     * Get information such as cache usage
+     * 
      * @return array
      * @example var_dump($yac->info());
      * array(11) {
@@ -151,10 +160,12 @@ class Yac
      */
     public function info(): array
     {
+        return [];
     }
 
     /**
-     * 导出缓存
+     * Export cache
+     * 
      * @param int $num
      * @return mixed
      * @example

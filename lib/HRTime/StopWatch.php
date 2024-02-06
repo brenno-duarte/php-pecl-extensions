@@ -2,15 +2,32 @@
 
 namespace PeclPolyfill\HRTime;
 
-class StopWatch
+class StopWatch extends PerformanceCounter
 {
+    /**
+     * @var array
+     */
     private array $event = [];
+    
+    /**
+     * @var int
+     */
     private int $start;
+    
+    /**
+     * @var int
+     */
     private int $stop;
+    
+    /**
+     * @var array
+     */
     private array $interval = [];
 
     /**
-     * Start a timer
+     * Start time measurement
+     * 
+     * @return void
      */
     public function start(): void
     {
@@ -19,7 +36,9 @@ class StopWatch
     }
 
     /**
-     * Stop a timer
+     * Stop time measurement
+     * 
+     * @return void
      */
     public function stop(): void
     {
@@ -44,39 +63,81 @@ class StopWatch
     }
 
     /**
+     * Get elapsed time for the last interval
+     *
+     * @param int $unit
      * 
+     * @return float 
      */
-    public function getLastElapsedTime(int $unit)
+    public function getLastElapsedTime(int $unit): float
     {
         $this->interval[] = $this->stop - $this->start;
         $time = end($this->interval);
 
         switch ($unit) {
             case 0:
-                return date('s', $time);
+                return round($time / 1.e9);
                 break;
-            
+
             case 1:
-                return date('u', $time);
+                return $time / 1e+6;
                 break;
 
             case 2:
-                return date('v', $time);
+                return round($time / 1.e6);
                 break;
 
             case 3:
                 return $time;
                 break;
         }
-        /* $last_elapsed_time = $this->stop - $this->start;
-        return $last_elapsed_time; */
     }
 
     /**
+     * Get elapsed time for all intervals
      *
+     * @param int $unit
+     * 
+     * @return float
      */
-    public function getElapsedTime(): float
+    public function getElapsedTime(int $unit): float
     {
-        return array_sum($this->interval);
+        $time = array_sum($this->interval);
+
+        switch ($unit) {
+            case 0:
+                return round($time / 1.e9);
+                break;
+
+            case 1:
+                return $time / 1e+6;
+                break;
+
+            case 2:
+                return round($time / 1.e6);
+                break;
+
+            case 3:
+                return $time;
+                break;
+        }
     }
+
+    /**
+     * Get elapsed ticks for all intervals
+     *
+     * @return int
+     */
+    /* public function getElapsedTicks(): int
+    {
+    } */
+
+    /**
+     * Get elapsed ticks for the last interval
+     *
+     * @return int
+     */
+    /*  public function getLastElapsedTicks(): int
+    {
+    } */
 }

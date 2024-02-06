@@ -1,18 +1,32 @@
 <?php
 
+//declare(ticks=1);
+
 namespace PeclPolyfill\HRTime;
 
 class PerformanceCounter
 {
-    public static function getFrequency(): int
+    public function __construct()
+    {
+        throw new \Exception('PerformanceCounter not implemented. Use "StopWatch" class instead'); 
+        //register_tick_function([$this, 'tickHandler']);
+    }
+
+    /* public function getFrequency(): int
+    {
+    }
+
+    public function getTicks(): int
+    {
+    }
+
+    public function getTicksSince(int $start): int
     {
         return hrtime(true);
     }
-    public static function getTicks(): int
+
+    public function tickHandler()
     {
-        
-    }
-    public static function getTicksSince(int $start): int
-    {
-    }
+        echo "tick_handler() called\n";
+    } */
 }

@@ -15,3 +15,6 @@ Composer:
   phpClassEditor: https://github.com/elkaadka/phpClassEditor
   Stats: https://github.com/maherio/phpstats
   Scrypt: https://github.com/windlace/scrypt
+  Translit: https://github.com/kirra/polyfill-translit
+  Inotify: https://packagist.org/packages/alb/php-inotify-ffi
+  StopWatch: https://github.com/Shiishiji/php_timer

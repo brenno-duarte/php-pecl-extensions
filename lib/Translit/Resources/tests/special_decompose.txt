@@ -1,0 +1,10 @@
+decompose special:
+© « ® ± »
+
+decompose currency signs:
+¢ £ ¥
+₠ ₡ ₢ ₣ ₤ ₥ ₦ ₧ ₨ ₩ ₪ ₫ € ₮
+
+decompose:
+§ © « ® ± »
+¢ £

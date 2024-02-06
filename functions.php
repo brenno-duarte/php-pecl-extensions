@@ -3,6 +3,7 @@
 require_once 'vendor/autoload.php';
 
 require_once 'constants.php';
+require_once 'inotify.php';
 require_once 'oauth.php';
 require_once 'statistic.php';
 require_once 'uopz.php';
@@ -13,6 +14,7 @@ use PeclPolyfill\Functions\Simdjson\Simdjson;
 use PeclPolyfill\Functions\Xdiff\Xdiff;
 use PeclPolyfill\Functions\Ssdeep\{SequenceMatcher, Utils};
 use PeclPolyfill\Functions\YAML\{YAML, YamlException};
+use PeclPolyfill\Translit\Translit;
 
 /**
  * VAR_REPRESENTATION
@@ -231,5 +233,26 @@ if (!extension_loaded('Scrypt')) {
     function scrypt(string $password, string $salt, int $n, int $r, int $p, int $length)
     {
         return bin2hex(Scrypt::calc($password, $salt, $n, $r, $p, $length));
+    }
+}
+
+/**
+ * TRANSLIT -----------------------------------------------------------------------------------
+ */
+if (!function_exists('transliterate')) {
+    function transliterate_filters_get()
+    {
+        return Translit::transliterate_filters_get();
+    }
+    
+    /**
+     * @param mixed $string
+     * @param array $filter_list
+     * @param null $charset_in
+     * @param null $charset_out
+     */
+    function transliterate($string, array $filter_list, $charset_in = null, $charset_out = null)
+    {
+        return Translit::transliterate($string, $filter_list, $charset_in, $charset_out);
     }
 }

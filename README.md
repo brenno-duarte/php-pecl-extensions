@@ -20,13 +20,16 @@ composer require brenno-duarte/php-pecl-extensions
 This package has polyfills for the following extensions:
 
 - base58
+- HRTime
 - igbinary
+- inotify
 - OAuth
 - scrypt
 - simdjson
 - sodium
 - ssdeep
 - statistic (partial)
+- translit
 - uopz (partial)
 - var_representation
 - xdiff (partial)

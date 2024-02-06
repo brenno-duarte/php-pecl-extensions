@@ -1,0 +1,29 @@
+		'hangul_to_jamo' => ['Kirra\Polyfill\Translit\HangulToJamo', 'convert'],
+		'compact_underscores' => ['Kirra\Polyfill\Translit\CompactUnderscores', 'convert'],
+	];
+
+	public static function transliterate_filters_get() {
+		return array_keys(self::$filters);
+	}
+
+	public static function transliterate($string, array $filter_list, $charset_in = null, $charset_out = null) {
+		if (strlen($charset_in)) {
+			$string = iconv($charset_in, 'ucs-2le', $string);
+		}
+
+		$string = array_values(unpack('S*', $string));
+		foreach ($filter_list as $filter) {
+			if (isset(self::$filters[$filter])) {
+				$string = call_user_func(self::$filters[$filter], $string);
+			}
+		}
+		array_unshift($string, 'S*');
+		$string = call_user_func_array('pack', $string);
+
+		if (strlen($charset_out)) {
+			$string = iconv('ucs-2le', $charset_out.'//IGNORE', $string);
+		}
+
+		return $string;
+	}
+}
