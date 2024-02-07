@@ -86,18 +86,7 @@ class PeclExtension
      */
     public function installWindowsComponent(string $name): ?bool
     {
-        $extension_name = '';
-
-        switch ($name) {
-            case 'memcache':
-                $extension_name = 'memcache' . DIRECTORY_SEPARATOR . 'vs16' . DIRECTORY_SEPARATOR . 'memcache-' . $this->php_info['php_version'] . '-x64-' . $this->php_info['thread_safe'] . DIRECTORY_SEPARATOR . 'php_memcache.dll';
-                break;
-
-            default:
-                $extension_name = $name . DIRECTORY_SEPARATOR . $name . '-' . $this->php_info['php_version'] . '-x64-' . $this->php_info['thread_safe'] . DIRECTORY_SEPARATOR . 'php_' . $name . '.dll';
-                break;
-        }
-
+        $extension_name = $name . DIRECTORY_SEPARATOR . $name . '-' . $this->php_info['php_version'] . '-x64-' . $this->php_info['thread_safe'] . DIRECTORY_SEPARATOR . 'php_' . $name . '.dll';
         $component = $this->dll_extensions_dir . $extension_name;
 
         if (is_file($component)) {
@@ -117,6 +106,18 @@ class PeclExtension
     }
 
     /**
+     * Install extensions for Linux
+     *
+     * @param string $name
+     * 
+     * @return mixed
+     */
+    public function installLinuxComponent(string $name): mixed
+    {
+        return Process::executeCommand('sudo apt install php' . $this->php_info['php_version'] . '-' . $name);
+    }
+
+    /**
      * List if extension is enabled and/or installed
      *
      * @param string $name
@@ -125,15 +126,17 @@ class PeclExtension
      */
     public function statusExtension(string $name): PeclExtension
     {
-        if (is_file($this->php_info['extensions_dir'] . 'php_' . $name . '.dll')) {
-            $this->success($name . ': extension installed')->print()->break();
+        if (PeclExtension::getOS() == 'Windows') {
+            $ext = 'dll';
+        }
 
-            if (extension_loaded($name) == true) {
-                $this->success($name . ': extension enabled on "php.ini"')->print()->break();
-            } else {
-                $this->warning($name . ': extension not enabled! Add this line on your "php.ini"')->print()->break(true);
-                $this->configIniComponent($name);
-            }
+        if (PeclExtension::getOS() == 'Linux') {
+            $ext = 'so';
+        }
+
+        if (is_file($this->php_info['extensions_dir'] . 'php_' . $name . '.' . $ext)) {
+            $this->success($name . ': extension installed')->print();
+            $this->isExtensionEnable($name);
 
             return $this;
         }
@@ -147,7 +150,7 @@ class PeclExtension
      *
      * @return void
      */
-    public function listServices(): void
+    public function listWindowsServices(): void
     {
         $this->warning('Binary files (.exe) available')->print()->break();
 
@@ -172,13 +175,16 @@ class PeclExtension
         }
 
         echo PHP_EOL;
-        $this->warning('PECL Extensions with DLL files')->print()->break();
-        $this->info('Use \'pecl install <extension_name>\'')->print()->break();
 
-        $this->finder->directories()->in($this->dll_extensions_dir)->depth('==0');
+        if (PeclExtension::getOS() == 'Linux') {
+            $this->warning('PECL Extensions with DLL files')->print()->break();
+            $this->info('Use \'vendor\bin\pecl install <extension_name>\'')->print()->break();
 
-        foreach ($this->finder as $finder) {
-            $this->success('    ' . $finder->getBasename())->print()->break();
+            $this->finder->directories()->in($this->dll_extensions_dir)->depth('==0');
+
+            foreach ($this->finder as $finder) {
+                $this->success('    ' . $finder->getBasename())->print()->break();
+            }
         }
     }
 
@@ -248,6 +254,16 @@ class PeclExtension
             default:
                 $this->info('extension=' . $name)->print();
                 break;
+        }
+    }
+
+    private function isExtensionEnable(string $name)
+    {
+        if (extension_loaded($name) == true) {
+            $this->success(' and enabled on "php.ini"')->print()->break();
+        } else {
+            $this->warning(', but not enabled. Add this line on your "php.ini"')->print()->break(true);
+            $this->configIniComponent($name);
         }
     }
 

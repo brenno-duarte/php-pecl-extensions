@@ -34,6 +34,7 @@ This package has polyfills for the following extensions:
 - var_representation
 - xdiff (partial)
 - xxtea (partial)
+- Yaconf
 - yaml
 
 The only thing you will need to do is call the `vendor/autoload.php` folder. Consult the documentation for each extension to learn how to use them.
@@ -44,17 +45,17 @@ To see the full list of available polyfills and DLLs, use this command:
 vendor/bin/pecl ext:list
 ```
 
-## Installing PECL extensions DLL
-
-**WARNING: The documentation from now on is exclusive to those using Windows. We will be working to implement it for other OS as well.**
+## Installing PECL extensions
 
 The following DLL files are available in this package:
 
 - apcu
 - memcache/memcached
+- mongodb
 - redis
 - solr
 - timezonedb
+- xdebug
 
 To install the required DLLs, use the following command:
 
@@ -73,6 +74,8 @@ If you want to know if an extension was installed successfully, use the `status`
 ```bash
 vendor/bin/pecl status memcached
 ```
+
+**WARNING: The documentation from now on is exclusive to those using Windows. We will be working to implement it for other OS as well.**
 
 ## Running required services
 
@@ -94,4 +97,10 @@ To stop a running service, use the `--stop` option.
 
 ```bash
 vendor/bin/pecl service memcached --stop
+```
+
+To see available services, use the `--list` option.
+
+```bash
+vendor/bin/pecl service --list
 ```

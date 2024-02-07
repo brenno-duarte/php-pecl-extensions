@@ -34,19 +34,23 @@ class Service extends Command implements CommandInterface
      */
     public function handle(object $arguments, object $options): mixed
     {
+        $pecl = new PeclExtension();
+
+        if (isset($options->list)) {
+            $pecl->listWindowsServices();
+            return true;
+        }
+
         if (!isset($arguments->bin_name)) {
             $this->error('You must enter the name of the service')->print()->exit();
         }
 
-        $pecl = new PeclExtension();
-
-        if (!isset($arguments->bin_name)) {
-            $pecl->listServices();
-            return true;
-        }
-
         if (PeclExtension::getOS() == 'Windows') {
             $pecl->serviceWindows($arguments->bin_name, $options);
+        }
+
+        if (PeclExtension::getOS() == 'Linux') {
+            $this->error('This command is only for Windows system')->print()->exit();
         }
 
         return $this;

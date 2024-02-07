@@ -5,6 +5,8 @@ DLL Files:
   Timezonedb: https://github.com/php/pecl-datetime-timezonedb
   Redis: https://github.com/dk-sirk/phpredis-windows-release
   Solr: https://github.com/php/pecl-search_engine-solr
+  Mongodb: https://github.com/mongodb/mongo-php-driver/
+  xdebug: https://github.com/xdebug/xdebug
 
 Binary:
   Memcached: https://github.com/jefyt/memcached-windows

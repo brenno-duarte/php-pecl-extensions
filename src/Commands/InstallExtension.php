@@ -37,7 +37,7 @@ class InstallExtension extends Command implements CommandInterface
         if (!isset($arguments->ext_name)) {
             $this->error('You must enter the name of the extension')->print()->exit();
         }
-        
+
         $pecl = new PeclExtension();
 
         if ($pecl->isPolyfillExists($arguments->ext_name) == true) {
@@ -47,6 +47,10 @@ class InstallExtension extends Command implements CommandInterface
 
         if (PeclExtension::getOS() == 'Windows') {
             return $pecl->installWindowsComponent($arguments->ext_name);
+        }
+
+        if (PeclExtension::getOS() == 'Linux') {
+            return $pecl->installLinuxComponent($arguments->ext_name);
         }
 
         return $this;
