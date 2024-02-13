@@ -1,4 +1,4 @@
-# PHP PECL Extension
+<img src="https://pecl.php.net/img/peclsmall.gif">
 
 A collection of pollyfills and DLL files for those who don't have PECL installed. This package also provides an easier way to install DLL for some PECL packages like memcached and APCu.
 
