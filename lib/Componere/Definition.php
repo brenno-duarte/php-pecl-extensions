@@ -16,6 +16,8 @@ final class Definition extends AbstractDefinition
     /* Constructors */
     public function __construct(string $name, string $parent = '', array $interfaces = [])
     {
+        throw new \Exception("DON'T use this component yet");
+        
         /* if (!class_exists($name)) {
             throw new \Exception("Class '" . $name . "' not exists");
         } */

@@ -19,6 +19,7 @@ class Yac
      */
     public function __construct(string $prefix = '')
     {
+        throw new \Exception("DON'T use this component yet");
     }
 
     /**

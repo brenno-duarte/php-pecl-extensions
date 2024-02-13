@@ -46,9 +46,10 @@ class PeclExtension
      * @var array
      */
     private array $extensions_with_polyfill = [
-        'base58', 'hrtime', 'igbinary', 'oauth', 'scrypt', 'simdjson', 'sodium',
-        'ssdeep', 'uopz', 'var_representation', 'xxtea',
-        'xdiff', 'yac', 'yaconf', 'yaml'
+        'base58', 'hrtime', 'igbinary', 'inotify', 'oauth',
+        'scrypt', 'simdjson', 'sodium', 'ssdeep', 'statistic (partial)',
+        'translit', 'uopz (partial)', 'var_representation', 'xxtea (partial)',
+        'xdiff (partial)', 'yaconf', 'yaml'
     ];
 
     public function __construct()
@@ -152,7 +153,7 @@ class PeclExtension
      */
     public function listWindowsServices(): void
     {
-        $this->warning('Binary files (.exe) available')->print()->break();
+        $this->line('Binary files (.exe) available')->print()->break();
 
         $this->finder->directories()->in($this->bin_files_dir)->depth('==0');
 
@@ -168,7 +169,7 @@ class PeclExtension
      */
     public function listExtensions(): void
     {
-        $this->warning('PECL Extensions with polyfill available')->print()->break();
+        $this->line('PECL Extensions with polyfill available')->print()->break();
 
         foreach ($this->extensions_with_polyfill as $ext) {
             $this->success('    ' . $ext)->print()->break();
@@ -176,8 +177,8 @@ class PeclExtension
 
         echo PHP_EOL;
 
-        if (PeclExtension::getOS() == 'Linux') {
-            $this->warning('PECL Extensions with DLL files')->print()->break();
+        if (PeclExtension::getOS() == 'Windows') {
+            $this->line('PECL Extensions with DLL files')->print()->break();
             $this->info('Use \'vendor\bin\pecl install <extension_name>\'')->print()->break();
 
             $this->finder->directories()->in($this->dll_extensions_dir)->depth('==0');
@@ -199,6 +200,10 @@ class PeclExtension
     public function serviceWindows(string $bin_name, object $option): true
     {
         $bin_dir = $this->bin_files_dir . $bin_name . DIRECTORY_SEPARATOR . $bin_name . '.exe';
+
+        if (!is_file($bin_dir)) {
+            $this->error($bin_name . ': binary (.exe) not found')->print()->exit();
+        }
 
         if (isset($option->stop)) {
             $status = Process::status($bin_name, 'kill');
