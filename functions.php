@@ -54,23 +54,6 @@ if (!extension_loaded('xxtea')) {
 }
 
 /**
- * IGBINARY -----------------------------------------------------------------------------------
- */
-if (!extension_loaded('igbinary_serialize')) {
-    function igbinary_serialize(mixed $value)
-    {
-        return serialize($value);
-    }
-}
-
-if (!extension_loaded('igbinary_unserialize')) {
-    function igbinary_unserialize(mixed $value)
-    {
-        return unserialize($value);
-    }
-}
-
-/**
  * SSDEEP -----------------------------------------------------------------------------------
  */
 if (!function_exists('ssdeep_fuzzy_compare')) {
@@ -105,8 +88,6 @@ if (!function_exists('ssdeep_fuzzy_hash_filename')) {
 
         $to_hash = basename($file_name);
         return ssdeep_fuzzy_hash($to_hash);
-        /* $secret_key = md5($to_hash);
-        return hash_hmac('sha256', $to_hash, $secret_key); */
     }
 }
 
@@ -244,7 +225,7 @@ if (!function_exists('transliterate')) {
     {
         return Translit::transliterate_filters_get();
     }
-    
+
     /**
      * @param mixed $string
      * @param array $filter_list

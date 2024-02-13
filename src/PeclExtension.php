@@ -46,9 +46,9 @@ class PeclExtension
      * @var array
      */
     private array $extensions_with_polyfill = [
-        'base58', 'hrtime', 'igbinary', 'inotify', 'oauth',
+        'base58', 'hrtime', 'inotify', 'oauth',
         'scrypt', 'simdjson', 'sodium', 'ssdeep', 'statistic (partial)',
-        'translit', 'uopz (partial)', 'var_representation', 'xxtea (partial)',
+        'translit', 'uopz (partial)', 'var_representation', 'xxtea',
         'xdiff (partial)', 'yaconf', 'yaml'
     ];
 
@@ -102,7 +102,7 @@ class PeclExtension
             return true;
         }
 
-        $this->error($name . ': extension not found for your PHP version')->print();
+        $this->error($name . ': extension not found for your PHP version or (Non)Thread Safe')->print();
         return false;
     }
 
@@ -238,6 +238,16 @@ class PeclExtension
         }
     }
 
+    private function isExtensionEnable(string $name)
+    {
+        if (extension_loaded($name) == true) {
+            $this->success(' and enabled on "php.ini"')->print()->break();
+        } else {
+            $this->success(', but not enabled. Add this line on your "php.ini"')->print()->break(true);
+            $this->configIniComponent($name);
+        }
+    }
+
     /**
      * @param string $name
      * 
@@ -256,19 +266,22 @@ class PeclExtension
                 $this->info('apc.serializer=php')->print();
                 break;
 
+            case 'yac':
+                $this->info('[yac]')->print()->break();
+                $this->info('extension=' . $name)->print()->break();
+                $this->info('yac.enable_cli=1')->print();
+
+            case 'xhprof':
+                $this->info('[xhprof]')->print()->break();
+                $this->info('extension=' . $name)->print()->break();
+                $this->info('xhprof.output_dir=/tmp/xhprof')->print()->break();
+                $this->info('xhprof.sampling_interval=100000')->print()->break();
+                $this->info('xhprof.collect_additional_info=0')->print();
+                break;
+
             default:
                 $this->info('extension=' . $name)->print();
                 break;
-        }
-    }
-
-    private function isExtensionEnable(string $name)
-    {
-        if (extension_loaded($name) == true) {
-            $this->success(' and enabled on "php.ini"')->print()->break();
-        } else {
-            $this->warning(', but not enabled. Add this line on your "php.ini"')->print()->break(true);
-            $this->configIniComponent($name);
         }
     }
 

@@ -49,26 +49,3 @@ if (!defined('VAR_REPRESENTATION_SINGLE_LINE')) {
 if (!defined('VAR_REPRESENTATION_UNESCAPED')) {
     define('VAR_REPRESENTATION_UNESCAPED', 2);
 }
-
-/**
- * YAC COMPONENT
- */
-if (!defined('YAC_VERSION')) {
-    define('YAC_VERSION', '2.3.1');
-}
-
-if (!defined('YAC_MAX_KEY_LEN')) {
-    define('YAC_MAX_KEY_LEN', 48);
-}
-
-if (!defined('YAC_MAX_VALUE_RAW_LEN')) {
-    define('YAC_MAX_VALUE_RAW_LEN', 67108863);
-}
-
-if (!defined('YAC_MAX_RAW_COMPRESSED_LEN')) {
-    define('YAC_MAX_RAW_COMPRESSED_LEN', 1048576);
-}
-
-if (!defined('YAC_SERIALIZER')) {
-    define('YAC_SERIALIZER', 'PHP');
-}

@@ -21,7 +21,6 @@ This package has polyfills for the following extensions:
 
 - base58
 - HRTime
-- igbinary
 - inotify
 - OAuth
 - scrypt
@@ -33,7 +32,7 @@ This package has polyfills for the following extensions:
 - uopz (partial)
 - var_representation
 - xdiff (partial)
-- xxtea (partial)
+- xxtea
 - Yaconf
 - yaml
 
@@ -50,12 +49,20 @@ vendor/bin/pecl ext:list
 The following DLL files are available in this package:
 
 - apcu
+- igbinary
+- imagick
+- imap
 - memcache/memcached
 - mongodb
 - redis
 - solr
 - timezonedb
+- var_representation
 - xdebug
+- xhprof
+- xxtea
+- yac
+- yaconf
 
 To install the required DLLs, use the following command:
 
@@ -75,9 +82,9 @@ If you want to know if an extension was installed successfully, use the `status`
 vendor/bin/pecl status memcached
 ```
 
-**WARNING: The documentation from now on is exclusive to those using Windows. We will be working to implement it for other OS as well.**
-
 ## Running required services
+
+**WARNING: Services is exclusive to those using Windows. We will be working to implement it for other OS as well.**
 
 Some services are required for extensions to work. For example, memcached.
 

@@ -7,7 +7,7 @@ namespace PeclPolyfillTest;
 require_once dirname(__DIR__) . '/constants.php';
 require_once dirname(__DIR__) . '/single_functions.php';
 
-use PeclPolyfill\VarRepresentation\Encoder;
+use PeclPolyfill\Functions\VarRepresentation\Encoder;
 use PHPUnit\Framework\TestCase;
 
 class VarRepresentationTest extends TestCase

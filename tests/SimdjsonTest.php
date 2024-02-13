@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace PeclPolyfillTest;
 
-use PeclPolyfill\Simdjson\Simdjson;
+use PeclPolyfill\Functions\Simdjson\Simdjson;
 use PHPUnit\Framework\TestCase;
 
 final class SimdjsonTest extends TestCase

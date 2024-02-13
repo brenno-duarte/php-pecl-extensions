@@ -7,6 +7,7 @@ DLL Files:
   Solr: https://github.com/php/pecl-search_engine-solr
   Mongodb: https://github.com/mongodb/mongo-php-driver/
   xdebug: https://github.com/xdebug/xdebug
+  Igbinary, imagick, imap, xhprof, xxtea, yac, yaconf: https://phpext.phptools.online/
 
 Binary:
   Memcached: https://github.com/jefyt/memcached-windows
