@@ -6,7 +6,6 @@ require_once 'constants.php';
 require_once 'inotify.php';
 require_once 'oauth.php';
 require_once 'statistic.php';
-require_once 'uopz.php';
 
 use PeclPolyfill\Functions\Base58\Base58;
 use PeclPolyfill\Functions\Scrypt\Scrypt;
@@ -235,5 +234,26 @@ if (!function_exists('transliterate')) {
     function transliterate($string, array $filter_list, $charset_in = null, $charset_out = null)
     {
         return Translit::transliterate($string, $filter_list, $charset_in, $charset_out);
+    }
+}
+
+/**
+ * UOPZ -----------------------------------------------------------------------------------
+ */
+if (!function_exists('uopz_get_property')) {
+    function uopz_get_property(string|object $class, string $property)
+    {
+        $reflection = new \ReflectionClass($class);
+        $name = $reflection->getProperty($property);
+        return $name->name;
+    }
+}
+
+if (!function_exists('uopz_get_static')) {
+    function uopz_get_static(string|object $class, string $property)
+    {
+        $reflection = new \ReflectionClass($class);
+        $name = $reflection->getProperty($property);
+        return $name->name;
     }
 }

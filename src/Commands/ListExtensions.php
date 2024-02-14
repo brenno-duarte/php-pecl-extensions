@@ -24,7 +24,7 @@ class ListExtensions extends Command implements CommandInterface
     /**
      * @var string
      */
-    protected string $description = "";
+    protected string $description = "List all polyfills and extensions available";
 
     /**
      * @param object $arguments

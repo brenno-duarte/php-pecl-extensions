@@ -14,7 +14,8 @@
         "symfony/filesystem": "^7.0",
         "symfony/finder": "^7.0",
         "yetanotherape/diff-match-patch": "^1.1",
-        "sebastian/diff": "^5.1"
+        "sebastian/diff": "^5.1",
+        "php-ds/php-ds": "^1.5"
     },
     "require-dev": {
         "phpunit/phpunit": "^10.5"

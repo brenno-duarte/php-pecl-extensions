@@ -46,7 +46,7 @@ class PeclExtension
      * @var array
      */
     private array $extensions_with_polyfill = [
-        'base58', 'hrtime', 'inotify', 'oauth',
+        'base58', 'ds', 'hrtime', 'inotify', 'oauth',
         'scrypt', 'simdjson', 'sodium', 'ssdeep', 'statistic (partial)',
         'translit', 'uopz (partial)', 'var_representation', 'xxtea',
         'xdiff (partial)', 'yaconf', 'yaml'
@@ -258,7 +258,7 @@ class PeclExtension
         switch ($name) {
             case 'apcu':
                 $this->info('[apcu]')->print()->break();
-                $this->info('extension=' . $name)->print()->break();
+                $this->info('extension=apcu')->print()->break();
                 $this->info('apc.enabled=1')->print()->break();
                 $this->info('apc.shm_size=32M')->print()->break();
                 $this->info('apc.ttl=7200')->print()->break();
@@ -266,14 +266,24 @@ class PeclExtension
                 $this->info('apc.serializer=php')->print();
                 break;
 
+            case 'imagick':
+                $this->info('extension=imagick')->print()->break();
+
+                if (self::getOS() == 'Windows') {
+                    echo PHP_EOL;
+                    $this->success('Copy all other DLL files into the PHP installation directory (in the same directory as `php.exe`)')->print();
+                }
+                break;
+
             case 'yac':
                 $this->info('[yac]')->print()->break();
-                $this->info('extension=' . $name)->print()->break();
+                $this->info('extension=yac')->print()->break();
                 $this->info('yac.enable_cli=1')->print();
+                break;
 
             case 'xhprof':
                 $this->info('[xhprof]')->print()->break();
-                $this->info('extension=' . $name)->print()->break();
+                $this->info('extension=xhprof')->print()->break();
                 $this->info('xhprof.output_dir=/tmp/xhprof')->print()->break();
                 $this->info('xhprof.sampling_interval=100000')->print()->break();
                 $this->info('xhprof.collect_additional_info=0')->print();

@@ -7,6 +7,9 @@ DLL Files:
   Solr: https://github.com/php/pecl-search_engine-solr
   Mongodb: https://github.com/mongodb/mongo-php-driver/
   xdebug: https://github.com/xdebug/xdebug
+  SSH2: https://github.com/php/pecl-networking-ssh2/releases
+  Yaf: https://phpext.phptools.online/extension/system/yaf-379
+  Ds: https://phpext.phptools.online/extension/structures/ds-262
   Igbinary, imagick, imap, xhprof, xxtea, yac, yaconf: https://phpext.phptools.online/
 
 Binary:

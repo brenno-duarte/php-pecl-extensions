@@ -25,7 +25,7 @@ class InstallExtension extends Command implements CommandInterface
     /**
      * @var string
      */
-    protected string $description = "";
+    protected string $description = "Install PECL extension on 'extension_dir'";
 
     /**
      * @var PeclExtension
@@ -47,7 +47,7 @@ class InstallExtension extends Command implements CommandInterface
         $this->pecl = new PeclExtension();
 
         if ($this->pecl->isPolyfillExists($arguments->ext_name) == true) {
-            (new InputOutput('green'))->confirmDialog($arguments->ext_name . ' has a polyfill. Continue with installation?', 'Y', 'N', false)->confirm(function () use ($arguments) {
+            (new InputOutput('green'))->confirmDialog("'" . $arguments->ext_name . "' has a polyfill. Continue with installation?", 'Y', 'N', false)->confirm(function () use ($arguments) {
                 $this->install($arguments->ext_name);
             })->refuse(function () {
                 $this->error('Aborted!')->print()->exit();

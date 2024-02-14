@@ -24,7 +24,7 @@ class StatusExtension extends Command implements CommandInterface
     /**
      * @var string
      */
-    protected string $description = "";
+    protected string $description = "List if an extension is enabled or installed";
 
     /**
      * @param object $arguments

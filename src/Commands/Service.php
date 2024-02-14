@@ -24,7 +24,7 @@ class Service extends Command implements CommandInterface
     /**
      * @var string
      */
-    protected string $description = "";
+    protected string $description = "Execute or list all Windows services";
 
     /**
      * @param object $arguments
