@@ -20,6 +20,7 @@ composer require brenno-duarte/php-pecl-extensions
 This package has polyfills for the following extensions:
 
 - base58
+- ds
 - HRTime
 - inotify
 - OAuth
@@ -49,6 +50,7 @@ vendor/bin/pecl ext:list
 The following DLL files are available in this package:
 
 - apcu
+- ds
 - igbinary
 - imagick
 - imap
@@ -56,6 +58,7 @@ The following DLL files are available in this package:
 - mongodb
 - redis
 - solr
+- ssh2
 - timezonedb
 - var_representation
 - xdebug
@@ -63,6 +66,7 @@ The following DLL files are available in this package:
 - xxtea
 - yac
 - yaconf
+- yaf
 
 To install the required DLLs, use the following command:
 
