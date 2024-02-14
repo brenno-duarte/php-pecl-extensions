@@ -266,6 +266,13 @@ class PeclExtension
                 $this->info('apc.serializer=php')->print();
                 break;
 
+            case 'pcov':
+                $this->info('[pcov]')->print()->break();
+                $this->info('extension=pcov')->print()->break();
+                $this->info('pcov.enabled=1')->print()->break();
+                $this->info('pcov.directory=/path/to/your/source/directory')->print();
+                break;
+
             case 'imagick':
                 $this->info('extension=imagick')->print()->break();
 

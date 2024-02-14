@@ -49,13 +49,16 @@ vendor/bin/pecl ext:list
 
 The following DLL files are available in this package:
 
+- amqp
 - apcu
 - ds
+- grpc
 - igbinary
 - imagick
 - imap
 - memcache/memcached
 - mongodb
+- pcov
 - redis
 - solr
 - ssh2
@@ -67,6 +70,7 @@ The following DLL files are available in this package:
 - yac
 - yaconf
 - yaf
+- zstd
 
 To install the required DLLs, use the following command:
 
