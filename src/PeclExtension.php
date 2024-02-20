@@ -274,11 +274,13 @@ class PeclExtension
                 break;
 
             case 'imagick':
+                $this->info('[imagick]')->print()->break();
                 $this->info('extension=imagick')->print()->break();
 
                 if (self::getOS() == 'Windows') {
                     echo PHP_EOL;
-                    $this->success('Copy all other DLL files into the PHP installation directory (in the same directory as `php.exe`)')->print();
+                    $this->success('See this link https://github.com/brenno-duarte/php-pecl-extensions/tree/main/ext-files/imagick/imagick-' . $this->php_info['php_version'] . '-x64-' . $this->php_info['thread_safe'] . '/')->print()->break();
+                    $this->success('And copy all DLL files into the PHP installation directory (in the same directory as `php.exe`)')->print();
                 }
                 break;
 
@@ -293,7 +295,8 @@ class PeclExtension
                 $this->info('extension=xhprof')->print()->break();
                 $this->info('xhprof.output_dir=/tmp/xhprof')->print()->break();
                 $this->info('xhprof.sampling_interval=100000')->print()->break();
-                $this->info('xhprof.collect_additional_info=0')->print();
+                $this->info('xhprof.collect_additional_info=0')->print()->break(true);
+                $this->success('See aditional files in https://github.com/brenno-duarte/php-pecl-extensions/tree/main/ext-files/xhprof/')->print();
                 break;
 
             default:
