@@ -32,6 +32,7 @@ class Service extends Command implements CommandInterface
      * 
      * @return mixed
      */
+    #[\Override]
     public function handle(object $arguments, object $options): mixed
     {
         $pecl = new PeclExtension();
