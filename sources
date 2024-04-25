@@ -12,9 +12,6 @@ DLL Files:
   Ds: https://phpext.phptools.online/extension/structures/ds-262
   Igbinary, imagick, imap, xhprof, xxtea, yac, yaconf: https://phpext.phptools.online/
 
-Binary:
-  Memcached: https://github.com/jefyt/memcached-windows
-
 Composer:
   Winkill: maximgrynykha/winkill
   Base58: https://github.com/stephen-hill/base58php
@@ -24,3 +21,4 @@ Composer:
   Translit: https://github.com/kirra/polyfill-translit
   Inotify: https://packagist.org/packages/alb/php-inotify-ffi
   StopWatch: https://github.com/Shiishiji/php_timer
+  JSONPath: https://github.com/FlowCommunications/JSONPath

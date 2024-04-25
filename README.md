@@ -23,6 +23,7 @@ This package has polyfills for the following extensions:
 - ds
 - HRTime
 - inotify
+- JSONPath
 - OAuth
 - scrypt
 - simdjson
@@ -88,36 +89,6 @@ If you want to know if an extension was installed successfully, use the `status`
 
 ```bash
 vendor/bin/pecl status memcached
-```
-
-## Running required services
-
-**WARNING: Services is exclusive to those using Windows. We will be working to implement it for other OS as well.**
-
-Some services are required for extensions to work. For example, memcached.
-
-To run a service, use the command:
-
-```bash
-vendor/bin/pecl service service-name
-```
-
-Example
-
-```bash
-vendor/bin/pecl service memcached
-```
-
-To stop a running service, use the `--stop` option.
-
-```bash
-vendor/bin/pecl service memcached --stop
-```
-
-To see available services, use the `--list` option.
-
-```bash
-vendor/bin/pecl service --list
 ```
 
 ## Extra files

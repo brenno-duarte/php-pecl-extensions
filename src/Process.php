@@ -1,10 +1,8 @@
 <?php
 
-namespace PeclExtension\Process;
+namespace PeclExtension;
 
 use PeclExtension\PeclExtension;
-use PeclExtension\Process\Winkill\Kernel\Interface\Exception;
-use PeclExtension\Process\Winkill\Winkill;
 
 class Process
 {
@@ -43,54 +41,6 @@ class Process
         self::$output = shell_exec($fullcmd);
 
         return new static;
-    }
-
-    /**
-     * @param string $process
-     * 
-     * @return true|null
-     */
-    public static function status(string $process, string $status = 'get'): ?true
-    {
-        try {
-            $winkill = new Winkill();
-            $processes = $winkill->scan();
-            $processes->where('process_name', '=', $process . '.exe');
-
-            if ($status == 'get') {
-                $selected = $processes->get();
-            }
-
-            if ($status == 'kill') {
-                $selected = $processes->kill();
-            }
-
-            if (is_array($selected)) {
-                return true;
-            }
-        } catch (Exception | \Throwable $throwable) {
-            die($throwable->getMessage());
-        }
-
-        return null;
-    }
-
-    /**
-     * Check for a current process by filename
-     * @param $file[optional] Filename
-     * @return Boolean
-     */
-    public static function processExists($file = false)
-    {
-        $exists     = false;
-        $file       = $file ? $file : __FILE__;
-
-        // Check if file is in process list
-        exec("ps -C $file -o pid=", $pids);
-        if (count($pids) > 1) {
-            $exists = true;
-        }
-        return $exists;
     }
 
     /**

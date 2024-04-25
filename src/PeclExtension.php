@@ -3,7 +3,7 @@
 namespace PeclExtension;
 
 use Matomo\Ini\IniReader;
-use PeclExtension\Process\Process;
+use PeclExtension\Process;
 use Solital\Core\Console\MessageTrait;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
@@ -46,7 +46,7 @@ class PeclExtension
      * @var array
      */
     private array $extensions_with_polyfill = [
-        'base58', 'ds', 'hrtime', 'inotify', 'oauth',
+        'base58', 'ds', 'HRTime', 'inotify', 'JSONPath', 'OAuth',
         'scrypt', 'simdjson', 'sodium', 'ssdeep', 'statistic (partial)',
         'translit', 'uopz (partial)', 'var_representation', 'xxtea',
         'xdiff (partial)', 'yaconf', 'yaml'
@@ -147,22 +147,6 @@ class PeclExtension
     }
 
     /**
-     * List binary files .exe available
-     *
-     * @return void
-     */
-    public function listWindowsServices(): void
-    {
-        $this->line('Binary files (.exe) available')->print()->break();
-
-        $this->finder->directories()->in($this->bin_files_dir)->depth('==0');
-
-        foreach ($this->finder as $finder) {
-            $this->success('    ' . $finder->getBasename())->print()->break();
-        }
-    }
-
-    /**
      * List polyfill and DLL available
      *
      * @return void
@@ -187,36 +171,6 @@ class PeclExtension
                 $this->success('    ' . $finder->getBasename())->print()->break();
             }
         }
-    }
-
-    /**
-     * Execute and kill a Windows process
-     *
-     * @param string $bin_name
-     * @param object $option
-     * 
-     * @return true
-     */
-    public function serviceWindows(string $bin_name, object $option): true
-    {
-        $bin_dir = $this->bin_files_dir . $bin_name . DIRECTORY_SEPARATOR . $bin_name . '.exe';
-
-        if (!is_file($bin_dir)) {
-            $this->error($bin_name . ': binary (.exe) not found')->print()->exit();
-        }
-
-        if (isset($option->stop)) {
-            $status = Process::status($bin_name, 'kill');
-
-            if ($status == true) {
-                $this->success($bin_name . ': process has been terminate')->print();
-                return true;
-            }
-        }
-
-        Process::execInBackground($bin_dir, 'process');
-        $this->success($bin_name . ': process is in execution')->print();
-        return true;
     }
 
     /**
