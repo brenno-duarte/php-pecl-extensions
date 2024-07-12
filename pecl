@@ -6,4 +6,4 @@ require_once 'vendor/autoload.php';
 use PeclExtension\PeclCommands;
 use Solital\Core\Console\Command;
 
-(new Command([PeclCommands::class]))->read($argv[1], $argv);
+(new Command([PeclCommands::class]))->read($argv);

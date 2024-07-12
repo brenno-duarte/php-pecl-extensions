@@ -1,8 +1,0 @@
-Latin-1 Supplement
-ÄÅÆÖØÜß äåæöøü
-
-Latin Extended-A
-ĲĳŒœ
-
-Latin Extended-B
-ǄǅǆǇǈǉǊǋǌ ǢǣǱǲǳǼǽǾǿ

@@ -5,9 +5,10 @@ declare(strict_types=1);
 namespace PeclPolyfillTest;
 
 require_once dirname(__DIR__) . '/constants.php';
-require_once dirname(__DIR__) . '/single_functions.php';
+require_once dirname(__DIR__) . '/functions.php';
 
 use PeclPolyfill\Functions\VarRepresentation\Encoder;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class VarRepresentationTest extends TestCase
@@ -18,9 +19,7 @@ class VarRepresentationTest extends TestCase
         $this->assertSame($expected, var_representation($value, $flags), 'unexpected result for var_representation (possibly the native version)');
     }
 
-    /**
-     * @dataProvider varRepresentationProvider
-     */
+    #[DataProvider("varRepresentationProvider")]
     public function testVarRepresentation(string $expected, $value): void
     {
         $this->assertVarRepresentationIs($expected, $value, VAR_REPRESENTATION_SINGLE_LINE);
@@ -32,7 +31,7 @@ class VarRepresentationTest extends TestCase
     /**
      * @return list<array{0:string,1:mixed}>
      */
-    public function varRepresentationProvider(): array
+    public static function varRepresentationProvider(): array
     {
         return [
             ['1', 1],
@@ -70,17 +69,15 @@ class VarRepresentationTest extends TestCase
         $o->other = 123;
         $expected = <<<EOT
 (object) [
-'o' => null,
-'other' => 123,
+  'o' => null,
+  'other' => 123,
 ]
 EOT;
         $this->assertSame($expected, @var_representation($o));
         $this->assertSame("(object) ['o' => null, 'other' => 123]", @var_representation($o, VAR_REPRESENTATION_SINGLE_LINE));
     }
 
-    /**
-     * @dataProvider varRepresentationIndentedProvider
-     */
+    #[DataProvider("varRepresentationIndentedProvider")]
     public function testVarRepresentationIndented(string $expected, $value, int $flags = 0): void
     {
         $this->assertVarRepresentationIs($expected, $value, $flags);
@@ -89,7 +86,7 @@ EOT;
     /**
      * @return list<array{0:string,1:mixed}>
      */
-    public function varRepresentationIndentedProvider(): array
+    public static function varRepresentationIndentedProvider(): array
     {
         return [
             ['1', 1],
@@ -155,9 +152,7 @@ EOT, (object) ['key' => [], 'other' => [(object) ['x' => -1]]],
         ];
     }
 
-    /**
-     * @dataProvider encodeStringProvider
-     */
+    #[DataProvider("encodeStringProvider")]
     public function testEncodeString(string $expected_double_quoted, ?string $expected_quoted, string $raw): void
     {
         $this->assertSame($expected_double_quoted, Encoder::encodeRawStringDoubleQuoted($raw));
@@ -168,7 +163,7 @@ EOT, (object) ['key' => [], 'other' => [(object) ['x' => -1]]],
     /**
      * @return list<array{0:string,1?:string,2:string}>
      */
-    public function encodeStringProvider(): array
+    public static function encodeStringProvider(): array
     {
         return [
             ['""', "''", ''],

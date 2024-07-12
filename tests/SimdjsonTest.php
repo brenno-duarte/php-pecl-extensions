@@ -5,14 +5,12 @@ declare(strict_types=1);
 namespace PeclPolyfillTest;
 
 use PeclPolyfill\Functions\Simdjson\Simdjson;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 final class SimdjsonTest extends TestCase
 {
-    /**
-     * @test
-     */
-    public function it_decodes_json(): void
+    public function test_it_decodes_json(): void
     {
         $json = '{"id": 1}';
 
@@ -25,7 +23,13 @@ final class SimdjsonTest extends TestCase
         $this->assertSame(1, $array['id']);
     }
 
-    public function providerJsonIsValid(): array
+    #[DataProvider("providerJsonIsValid")]
+    public function test_it_checks_if_json_is_valid(string $json, $expected): void
+    {
+        $this->assertSame($expected, Simdjson::simdjsonIsValid($json));
+    }
+
+    public static function providerJsonIsValid(): array
     {
         return [
             [
@@ -59,16 +63,13 @@ final class SimdjsonTest extends TestCase
         ];
     }
 
-    /**
-     * @test
-     * @dataProvider providerJsonIsValid
-     */
-    public function it_checks_if_json_is_valid(string $json, $expected): void
+    #[DataProvider("providerKeyValueArray")]
+    public function test_it_returns_key_value_array(string $json, string $key, $expected): void
     {
-        $this->assertSame($expected, Simdjson::simdjsonIsValid($json));
+        $this->assertSame($expected, Simdjson::simdjsonKeyValue($json, $key, true));
     }
 
-    public function providerKeyValueArray(): array
+    public static function providerKeyValueArray(): array
     {
         $data = [
             'result' => [
@@ -110,15 +111,6 @@ final class SimdjsonTest extends TestCase
         ];
     }
 
-    /**
-     * @test
-     * @dataProvider providerKeyValueArray
-     */
-    public function it_returns_key_value_array(string $json, string $key, $expected): void
-    {
-        $this->assertSame($expected, Simdjson::simdjsonKeyValue($json, $key, true));
-    }
-
     public function providerKeyValueObject(): array
     {
         $data = [
@@ -156,10 +148,7 @@ final class SimdjsonTest extends TestCase
         ];
     }
 
-    /**
-     * @test
-     */
-    public function it_returns_key_value_object(): void
+    public function test_it_returns_key_value_object(): void
     {
         $data = [
             'result' => [
@@ -193,10 +182,7 @@ final class SimdjsonTest extends TestCase
         $this->assertSame(2, $data);
     }
 
-    /**
-     * @test
-     */
-    public function it_counts_keys(): void
+    public function test_it_counts_keys(): void
     {
         $data = [
             'result' => [
@@ -221,7 +207,13 @@ final class SimdjsonTest extends TestCase
         $this->assertSame(2, $count);
     }
 
-    public function providerKeyExists(): array
+    #[DataProvider("providerKeyExists")]
+    public function test_it_checks_if_key_exists(string $json, string $key, $expected): void
+    {
+        $this->assertSame($expected, Simdjson::simdjsonKeyExists($json, $key));
+    }
+
+    public static function providerKeyExists(): array
     {
         $data = [
             'result' => [
@@ -276,14 +268,5 @@ final class SimdjsonTest extends TestCase
                 'expected' => false,
             ],
         ];
-    }
-
-    /**
-     * @test
-     * @dataProvider providerKeyExists
-     */
-    public function it_checks_if_key_exists(string $json, string $key, $expected): void
-    {
-        $this->assertSame($expected, Simdjson::simdjsonKeyExists($json, $key));
     }
 }

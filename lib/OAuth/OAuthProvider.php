@@ -1,6 +1,6 @@
 <?php
 
-namespace PeclPolyfill\OAuth;
+namespace OAuth;
 
 class OAuthProvider
 {

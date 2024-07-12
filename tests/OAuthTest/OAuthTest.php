@@ -7,7 +7,6 @@ use PHPUnit\Framework\TestCase;
 
 class OAuthTest extends TestCase
 {
-
 	public function testTwitterPostExample()
 	{
 		$postParams = array(

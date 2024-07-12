@@ -7,18 +7,14 @@ require_once 'inotify.php';
 require_once 'oauth.php';
 require_once 'statistic.php';
 
-use PeclPolyfill\Functions\Base58\Base58;
-use PeclPolyfill\Functions\Scrypt\Scrypt;
-use PeclPolyfill\Functions\Simdjson\Simdjson;
-use PeclPolyfill\Functions\Xdiff\Xdiff;
+use PeclPolyfill\Functions\{Base58\Base58, Scrypt\Scrypt, Simdjson\Simdjson, Xdiff\Xdiff};
 use PeclPolyfill\Functions\Ssdeep\{SequenceMatcher, Utils};
 use PeclPolyfill\Functions\YAML\{YAML, YamlException};
-use PeclPolyfill\Translit\Translit;
 
 /**
  * VAR_REPRESENTATION
  */
-if (!function_exists('var_representation')) {
+if (!extension_loaded('var_representation')) {
     /**
      * Convert a variable to a string in a way that fixes the shortcomings of `var_export()`.
      *
@@ -55,8 +51,16 @@ if (!extension_loaded('xxtea')) {
 /**
  * SSDEEP -----------------------------------------------------------------------------------
  */
-if (!function_exists('ssdeep_fuzzy_compare')) {
-    function ssdeep_fuzzy_compare(string $signature1, string $signature2)
+if (!extension_loaded('ssdeep')) {
+    /**
+     * Calculates the match score between two fuzzy hash signatures
+     *
+     * @param string $signature1
+     * @param string $signature2
+     * 
+     * @return int
+     */
+    function ssdeep_fuzzy_compare(string $signature1, string $signature2): int
     {
         if (strlen($signature1) === 0 || strlen($signature2) === 0) {
             return 0;
@@ -66,18 +70,28 @@ if (!function_exists('ssdeep_fuzzy_compare')) {
 
         return Utils::intr(100 * $m->Ratio());
     }
-}
 
-if (!function_exists('ssdeep_fuzzy_hash')) {
-    function ssdeep_fuzzy_hash(string $to_hash)
+    /**
+     * Create a fuzzy hash from a string
+     *
+     * @param string $to_hash
+     * 
+     * @return string
+     */
+    function ssdeep_fuzzy_hash(string $to_hash): string
     {
         $secret_key = md5($to_hash);
         return hash_hmac('sha256', $to_hash, $secret_key);
     }
-}
 
-if (!function_exists('ssdeep_fuzzy_hash_filename')) {
-    function ssdeep_fuzzy_hash_filename(string $file_name)
+    /**
+     * Create a fuzzy hash from a file
+     *
+     * @param string $file_name
+     * 
+     * @return string
+     */
+    function ssdeep_fuzzy_hash_filename(string $file_name): string
     {
         $file_name = str_replace('/', DIRECTORY_SEPARATOR, $file_name);
 
@@ -94,6 +108,13 @@ if (!function_exists('ssdeep_fuzzy_hash_filename')) {
  * YAML -----------------------------------------------------------------------------------
  */
 if (!extension_loaded('yaml')) {
+    /**
+     * Parse a YAML stream
+     *
+     * @param string $input
+     * 
+     * @return mixed
+     */
     function yaml_parse(string $input): mixed
     {
         if (is_file($input)) {
@@ -103,6 +124,13 @@ if (!extension_loaded('yaml')) {
         return YAML::YAMLLoad($input);
     }
 
+    /**
+     * Parse a YAML stream from a file
+     *
+     * @param string $input
+     * 
+     * @return mixed
+     */
     function yaml_parse_file(string $input): mixed
     {
         if (!is_file($input)) {
@@ -112,6 +140,13 @@ if (!extension_loaded('yaml')) {
         return YAML::YAMLLoad($input);
     }
 
+    /**
+     * Returns the YAML representation of a value
+     *
+     * @param array $input
+     * 
+     * @return mixed
+     */
     function yaml_emit(array $input): mixed
     {
         return YAML::YAMLDump($input);
@@ -121,15 +156,13 @@ if (!extension_loaded('yaml')) {
 /**
  * BASE58 -----------------------------------------------------------------------------------
  */
-if (!function_exists('base58_encode')) {
+if (!extension_loaded('base58')) {
     function base58_encode(string $string)
     {
         $base58 = new Base58();
         return $base58->encode($string);
     }
-}
 
-if (!function_exists('base58_decode')) {
     function base58_decode(string $string)
     {
         $base58 = new Base58();
@@ -140,28 +173,22 @@ if (!function_exists('base58_decode')) {
 /**
  * XDIFF -----------------------------------------------------------------------------------
  */
-if (!function_exists('xdiff_string_diff')) {
+if (!function_exists('xdiff')) {
     function xdiff_string_diff(string $old_data, string $new_data)
     {
         return Xdiff::xdiffStringDiff($old_data, $new_data);
     }
-}
 
-if (!function_exists('xdiff_string_patch')) {
     function xdiff_string_patch(string $str, string $patch)
     {
         return Xdiff::xdiffStringPatch($str, $patch);
     }
-}
 
-if (!function_exists('xdiff_file_merge3')) {
     function xdiff_file_merge3(string $old_file, string $new_file1, string $new_file2, string $dest)
     {
         return Xdiff::xdiffFileMerge3($old_file, $new_file1, $new_file2, $dest);
     }
-}
 
-if (!function_exists('xdiff_file_diff')) {
     function xdiff_file_diff(string $old_file, string $new_file, string $dest)
     {
         return Xdiff::xdiffFileDiff($old_file, $new_file, $dest);
@@ -171,35 +198,27 @@ if (!function_exists('xdiff_file_diff')) {
 /**
  * SIMDJSON -----------------------------------------------------------------------------------
  */
-if (!function_exists('simdjson_is_valid')) {
+if (!extension_loaded('simdjson')) {
     function simdjson_is_valid(string $json, int $depth = 512)
     {
         return Simdjson::simdjsonIsValid($json, $depth);
     }
-}
 
-if (!function_exists('simdjson_decode')) {
     function simdjson_decode(string $json, bool $associative = false, int $depth = 512)
     {
         return Simdjson::simdjsonDecode($json, $associative, $depth);
     }
-}
 
-if (!function_exists('simdjson_key_count')) {
     function simdjson_key_count(string $json, string $key, int $depth = 512, bool $throw_if_uncountable = false)
     {
         return Simdjson::simdjsonKeyCount($json, $key, $depth, $throw_if_uncountable);
     }
-}
 
-if (!function_exists('simdjson_key_exists')) {
     function simdjson_key_exists(string $json, string $key, int $depth = 512)
     {
         return Simdjson::simdjsonKeyExists($json, $key, $depth);
     }
-}
 
-if (!function_exists('simdjson_key_value')) {
     function simdjson_key_value(string $json, string $key, bool $associative = false, int $depth = 512)
     {
         return Simdjson::simdjsonKeyValue($json, $key, $associative, $depth);
@@ -217,39 +236,16 @@ if (!extension_loaded('Scrypt')) {
 }
 
 /**
- * TRANSLIT -----------------------------------------------------------------------------------
- */
-if (!function_exists('transliterate')) {
-    function transliterate_filters_get()
-    {
-        return Translit::transliterate_filters_get();
-    }
-
-    /**
-     * @param mixed $string
-     * @param array $filter_list
-     * @param null $charset_in
-     * @param null $charset_out
-     */
-    function transliterate($string, array $filter_list, $charset_in = null, $charset_out = null)
-    {
-        return Translit::transliterate($string, $filter_list, $charset_in, $charset_out);
-    }
-}
-
-/**
  * UOPZ -----------------------------------------------------------------------------------
  */
-if (!function_exists('uopz_get_property')) {
+if (!extension_loaded('uopz')) {
     function uopz_get_property(string|object $class, string $property)
     {
         $reflection = new \ReflectionClass($class);
         $name = $reflection->getProperty($property);
         return $name->name;
     }
-}
 
-if (!function_exists('uopz_get_static')) {
     function uopz_get_static(string|object $class, string $property)
     {
         $reflection = new \ReflectionClass($class);

@@ -2,31 +2,33 @@
 
 //declare(ticks=1);
 
-namespace PeclPolyfill\HRTime;
+namespace HRTime;
 
-class PerformanceCounter
-{
-    public function __construct()
+if (!extension_loaded("hrtime")) {
+    class PerformanceCounter
     {
-        throw new \Exception('PerformanceCounter not implemented. Use "StopWatch" class instead'); 
-        //register_tick_function([$this, 'tickHandler']);
+        public function __construct()
+        {
+            throw new \Exception('PerformanceCounter not implemented. Use "StopWatch" class instead');
+            //register_tick_function([$this, 'tickHandler']);
+        }
+
+        /* public function getFrequency(): int
+        {
+        }
+
+        public function getTicks(): int
+        {
+        }
+
+        public function getTicksSince(int $start): int
+        {
+            return hrtime(true);
+        }
+
+        public function tickHandler()
+        {
+            echo "tick_handler() called\n";
+        } */
     }
-
-    /* public function getFrequency(): int
-    {
-    }
-
-    public function getTicks(): int
-    {
-    }
-
-    public function getTicksSince(int $start): int
-    {
-        return hrtime(true);
-    }
-
-    public function tickHandler()
-    {
-        echo "tick_handler() called\n";
-    } */
 }

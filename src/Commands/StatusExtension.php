@@ -4,13 +4,11 @@ namespace PeclExtension\Commands;
 
 use PeclExtension\PeclExtension;
 use Solital\Core\Console\Command;
-use Solital\Core\Console\MessageTrait;
 use Solital\Core\Console\Interface\CommandInterface;
+use Solital\Core\Console\Output\ConsoleOutput;
 
 class StatusExtension extends Command implements CommandInterface
 {
-    use MessageTrait;
-
     /**
      * @var string
      */
@@ -36,7 +34,7 @@ class StatusExtension extends Command implements CommandInterface
     public function handle(object $arguments, object $options): mixed
     {
         if (!isset($arguments->ext_name)) {
-            $this->error('You must enter the name of the extension')->print()->exit();
+            ConsoleOutput::error('You must enter the name of the extension')->print()->exit();
         }
         
         $pecl = new PeclExtension();

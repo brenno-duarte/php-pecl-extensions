@@ -4,13 +4,10 @@ namespace PeclExtension\Commands;
 
 use PeclExtension\PeclExtension;
 use Solital\Core\Console\Command;
-use Solital\Core\Console\MessageTrait;
 use Solital\Core\Console\Interface\CommandInterface;
 
 class ListExtensions extends Command implements CommandInterface
 {
-    use MessageTrait;
-
     /**
      * @var string
      */
@@ -37,7 +34,6 @@ class ListExtensions extends Command implements CommandInterface
     {
         $pecl = new PeclExtension();
         $pecl->listExtensions();
-
         return $this;
     }
 }

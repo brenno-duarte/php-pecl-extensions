@@ -6,24 +6,28 @@
         "ext-curl": "*",
         "ext-openssl": "*",
         "ext-hash": "*",
+        "ext-gmp": "*",
         "paragonie/sodium_compat": "^1.20",
         "matomo/ini": "^3.0",
         "phpspec/php-diff": "^1.1",
+        "php-ds/php-ds": "^1.5",
+        "phpseclib/bcmath_compat": "^2.0",
         "lupecode/php-trader-native": "^2.1",
         "solital/vinci-console": "^4.0",
-        "symfony/filesystem": "^7.0",
         "symfony/finder": "^7.0",
         "yetanotherape/diff-match-patch": "^1.1",
-        "sebastian/diff": "^5.1",
-        "php-ds/php-ds": "^1.5"
+        "sebastian/diff": "^6"
     },
     "require-dev": {
-        "phpunit/phpunit": "^10.5"
+        "phpunit/phpunit": "^11"
     },
     "autoload": {
         "psr-4": {
             "PeclPolyfill\\": "lib/",
-            "PeclExtension\\": "src/"
+            "PeclExtension\\": "src/",
+            "Yaconf\\": "lib/Yaconf/",
+            "HRTime\\": "lib/HRTime/",
+            "OAuth\\": "lib/OAuth/"
         },
         "files": [
             "functions.php"

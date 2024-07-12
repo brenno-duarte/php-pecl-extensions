@@ -1,13 +1,14 @@
 <img src="https://pecl.php.net/img/peclsmall.gif">
 
-A collection of pollyfills and DLL files for those who don't have PECL installed. This package also provides an easier way to install DLL for some PECL packages like memcached and APCu.
+A collection of pollyfills and DLL files for Windows for those who don't have PECL installed. This package also provides an easier way to install DLL for some PECL packages like memcached and APCu.
 
 ## Requeriments
 
 - PHP >= 8.3
-- PHP CURL
-- PHP OpenSSL
-- PHP Hash
+- Curl extension
+- OpenSSL extension
+- Hash extension
+- GMP extension
 
 ## Installing via Composer
 
@@ -21,22 +22,20 @@ This package has polyfills for the following extensions:
 
 - base58
 - ds
-- HRTime
+- HRTime (partial)
 - inotify
-- JSONPath
 - OAuth
 - scrypt
 - simdjson
 - sodium
 - ssdeep
 - statistic (partial)
-- translit
 - uopz (partial)
 - var_representation
 - xdiff (partial)
 - xxtea
 - Yaconf
-- yaml
+- yaml (partial)
 
 The only thing you will need to do is call the `vendor/autoload.php` folder. Consult the documentation for each extension to learn how to use them.
 
@@ -48,30 +47,7 @@ vendor/bin/pecl ext:list
 
 ## Installing PECL extensions
 
-The following DLL files are available in this package:
-
-- amqp
-- apcu
-- ds
-- grpc
-- igbinary
-- imagick
-- imap
-- memcache/memcached
-- mongodb
-- pcov
-- redis
-- solr
-- ssh2
-- timezonedb
-- var_representation
-- xdebug
-- xhprof
-- xxtea
-- yac
-- yaconf
-- yaf
-- zstd
+The DLLs are available in the repository [https://github.com/brenno-duarte/php-pecl](https://github.com/brenno-duarte/php-pecl). You can access the previous link and enter the `extensions/` folder to see the available extensions.
 
 To install the required DLLs, use the following command:
 

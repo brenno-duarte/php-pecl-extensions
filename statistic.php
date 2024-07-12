@@ -1,7 +1,15 @@
 <?php
 
-if (!function_exists('stats_covariance')) {
-    function stats_covariance($valuesA, $valuesB)
+if (!extension_loaded('stats')) {
+    /**
+     * Returns the covariance of a and b, or FALSE on failure.
+     *
+     * @param array $valuesA
+     * @param array $valuesB
+     * 
+     * @return float
+     */
+    function stats_covariance(array $valuesA, array $valuesB): float
     {
         $countA = count($valuesA);
         $countB = count($valuesB);
@@ -36,10 +44,15 @@ if (!function_exists('stats_covariance')) {
 
         return $add / floatval($countA);
     }
-}
 
-if (!function_exists('stats_harmonic_mean')) {
-    function stats_harmonic_mean(...$a)
+    /**
+     * Returns the harmonic mean of the values in a, or FALSE if a is empty or is not an array
+     *
+     * @param mixed ...$a
+     * 
+     * @return float|int
+     */
+    function stats_harmonic_mean(): float|int
     {
         $sum = null;
         $num_args = func_num_args();
@@ -50,10 +63,15 @@ if (!function_exists('stats_harmonic_mean')) {
 
         return $num_args / $sum;
     }
-}
 
-if (!function_exists('stats_kurtosis')) {
-    function stats_kurtosis($values)
+    /**
+     * Returns the kurtosis of the values in a, or FALSE if a is empty or is not an array.
+     *
+     * @param array $values
+     * 
+     * @return bool
+     */
+    function stats_kurtosis(array $values): bool
     {
         $numValues = count($values);
         if ($numValues == 0) {
@@ -77,10 +95,15 @@ if (!function_exists('stats_kurtosis')) {
         $variance = $add2 / floatval($numValues);
         return ($add4 * $numValues) / ($add2 * $add2) - 3.0;
     }
-}
 
-if (!function_exists('stats_skew')) {
-    function stats_skew($values)
+    /**
+     * Returns the skewness of the values in a, or FALSE if a is empty or is not an array
+     *
+     * @param array $values
+     * 
+     * @return bool|float
+     */
+    function stats_skew(array $values): bool|float
     {
         $numValues = count($values);
 
@@ -106,9 +129,7 @@ if (!function_exists('stats_skew')) {
 
         return ($add3 / floatval($numValues)) / pow($variance, 3 / 2.0);
     }
-}
 
-if (!function_exists('stats_standard_deviation')) {
     /**
      * This user-land implementation follows the implementation quite strictly;
      * it does not attempt to improve the code or algorithm in any way. It will
@@ -141,9 +162,7 @@ if (!function_exists('stats_standard_deviation')) {
         }
         return sqrt($carry / $n);
     }
-}
 
-if (!function_exists('stats_stat_correlation')) {
     /**
      * Returns the Pearson correlation coefficient of two data sets
      * 
@@ -174,11 +193,14 @@ if (!function_exists('stats_stat_correlation')) {
         $corr = $axb / sqrt($a2 * $b2);
         return $corr;
     }
-}
 
-if (!function_exists('stats_stat_percentile')) {
     /**
      * Returns the percentile value
+     *
+     * @param array $arr
+     * @param float $perc
+     * 
+     * @return float 
      */
     function stats_stat_percentile(array $arr, float $perc): float
     {
@@ -190,9 +212,7 @@ if (!function_exists('stats_stat_percentile')) {
 
         return $percvar;
     }
-}
 
-if (!function_exists('stats_variance')) {
     /**
      * Returns the variance of the values in $data_set
      *
@@ -212,9 +232,7 @@ if (!function_exists('stats_variance')) {
 
         return $squared_sum / count($data_set);
     }
-}
 
-if (!function_exists('stats_rand_gen_beta')) {
     /**
      * Generates a random deviate from the beta distribution
      *
@@ -223,7 +241,7 @@ if (!function_exists('stats_rand_gen_beta')) {
      * 
      * @return float
      */
-    function stats_rand_gen_beta(float $a, float $b)
+    function stats_rand_gen_beta(float $a, float $b): float
     {
         if ($a <= 1.0 && $b <= 1.0) {
             while (true) {

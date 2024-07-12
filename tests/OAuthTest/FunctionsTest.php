@@ -8,7 +8,6 @@ use PHPUnit\Framework\TestCase;
 
 class FunctionsTest extends TestCase
 {
-
 	public function testGetSbs_TwitterPostExample()
 	{
 		$params = array(

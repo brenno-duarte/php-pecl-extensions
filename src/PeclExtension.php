@@ -4,23 +4,16 @@ namespace PeclExtension;
 
 use Matomo\Ini\IniReader;
 use PeclExtension\Process;
-use Solital\Core\Console\MessageTrait;
+use Solital\Core\Console\Output\ConsoleOutput;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 
 class PeclExtension
 {
-    use MessageTrait;
-
     const OS_UNKNOWN = 'Unknown';
     const OS_WIN = 'Windows';
     const OS_LINUX = 'Linux';
     const OS_OSX = 'MacOS';
-
-    /**
-     * @var Filesystem
-     */
-    private Filesystem $filesystem;
 
     /**
      * @var Finder
@@ -38,11 +31,6 @@ class PeclExtension
     private string $dll_extensions_dir = '';
 
     /**
-     * @var string
-     */
-    private string $bin_files_dir = '';
-
-    /**
      * @var array
      */
     private array $extensions_with_polyfill = [
@@ -54,12 +42,10 @@ class PeclExtension
 
     public function __construct()
     {
-        $this->filesystem = new Filesystem();
         $this->finder = new Finder();
 
         $this->PhpInfo();
         $this->dll_extensions_dir = dirname(__DIR__) . DIRECTORY_SEPARATOR . "ext" . DIRECTORY_SEPARATOR;
-        $this->bin_files_dir = dirname(__DIR__) . DIRECTORY_SEPARATOR . 'bin' . DIRECTORY_SEPARATOR;
     }
 
     /**
@@ -87,22 +73,34 @@ class PeclExtension
      */
     public function installWindowsComponent(string $name): ?bool
     {
-        $extension_name = $name . DIRECTORY_SEPARATOR . $name . '-' . $this->php_info['php_version'] . '-x64-' . $this->php_info['thread_safe'] . DIRECTORY_SEPARATOR . 'php_' . $name . '.dll';
-        $component = $this->dll_extensions_dir . $extension_name;
+        if (extension_loaded($name)) {
+            ConsoleOutput::success($name . ": extension already installed")->print()->exit();
+        }
 
-        if (is_file($component)) {
-            $component_name = basename($component);
-            $component_to_ext_dir = $this->php_info['extensions_dir'] . $component_name;
+        $url = "https://raw.githubusercontent.com/brenno-duarte/php-pecl-extensions/main/ext/" .
+            $name . "/" . $name . "-" . $this->php_info['php_version'] . "-x64-" .
+            $this->php_info['thread_safe'] . "/php_" . $name . ".dll";
 
-            if (!is_file($component_to_ext_dir)) {
-                $this->filesystem->copy($component, $component_to_ext_dir);
-            }
+        $extension_dir_file = $this->php_info["extensions_dir"] . "php_" . $name . ".dll";
+        $extension_dir_temp = sys_get_temp_dir() . DIRECTORY_SEPARATOR . "php_" . $name . ".dll";
+        $data = @fopen($url, "r");
 
-            $this->statusExtension($name);
+        if ($data == false) ConsoleOutput::error("Extension `" . $name . "` not found on repository")->print()->exit();
+        $file = file_put_contents($extension_dir_temp, $data);
+
+        if ($file == false) ConsoleOutput::error("Failed to create DLL file")->print()->exit();
+        $is_moved = rename($extension_dir_temp, $extension_dir_file);
+
+        if ($is_moved == true && is_file($extension_dir_file)) {
+            ConsoleOutput::success($name . ": extension installed")->print();
+
+            if (file_exists($extension_dir_temp)) unlink($extension_dir_temp);
+            clearstatcache();
+            $this->isExtensionEnable($name);
             return true;
         }
 
-        $this->error($name . ': extension not found for your PHP version or (Non)Thread Safe')->print();
+        ConsoleOutput::error($name . ': extension not found for your PHP version or (Non)Thread Safe')->print();
         return false;
     }
 
@@ -127,22 +125,16 @@ class PeclExtension
      */
     public function statusExtension(string $name): PeclExtension
     {
-        if (PeclExtension::getOS() == 'Windows') {
-            $ext = 'dll';
-        }
-
-        if (PeclExtension::getOS() == 'Linux') {
-            $ext = 'so';
-        }
+        if (PeclExtension::getOS() == 'Windows') $ext = 'dll';
+        if (PeclExtension::getOS() == 'Linux') $ext = 'so';
 
         if (is_file($this->php_info['extensions_dir'] . 'php_' . $name . '.' . $ext)) {
-            $this->success($name . ': extension installed')->print();
+            ConsoleOutput::success($name . ': extension installed')->print();
             $this->isExtensionEnable($name);
-
             return $this;
         }
 
-        $this->warning($name . ': extension not installed')->print()->break();
+        ConsoleOutput::warning($name . ': extension not installed')->print()->break();
         return $this;
     }
 
@@ -153,22 +145,22 @@ class PeclExtension
      */
     public function listExtensions(): void
     {
-        $this->line('PECL Extensions with polyfill available')->print()->break();
+        ConsoleOutput::line('PECL Extensions with polyfill available')->print()->break();
 
         foreach ($this->extensions_with_polyfill as $ext) {
-            $this->success('    ' . $ext)->print()->break();
+            ConsoleOutput::success('    ' . $ext)->print()->break();
         }
 
         echo PHP_EOL;
 
         if (PeclExtension::getOS() == 'Windows') {
-            $this->line('PECL Extensions with DLL files')->print()->break();
-            $this->info('Use \'vendor\bin\pecl install <extension_name>\'')->print()->break();
+            ConsoleOutput::line('PECL Extensions with DLL files')->print()->break();
+            ConsoleOutput::info('Use \'vendor\bin\pecl install <extension_name>\'')->print()->break();
 
             $this->finder->directories()->in($this->dll_extensions_dir)->depth('==0');
 
             foreach ($this->finder as $finder) {
-                $this->success('    ' . $finder->getBasename())->print()->break();
+                ConsoleOutput::success('    ' . $finder->getBasename())->print()->break();
             }
         }
     }
@@ -176,9 +168,9 @@ class PeclExtension
     /**
      * Get OS used
      * 
-     * @return int
+     * @return string
      */
-    public static function getOS()
+    public static function getOS(): string
     {
         switch (true) {
             case stristr(PHP_OS, 'DAR'):
@@ -192,12 +184,12 @@ class PeclExtension
         }
     }
 
-    private function isExtensionEnable(string $name)
+    private function isExtensionEnable(string $name): void
     {
         if (extension_loaded($name) == true) {
-            $this->success(' and enabled on "php.ini"')->print()->break();
+            ConsoleOutput::success(' and enabled on "php.ini"')->print()->break();
         } else {
-            $this->success(', but not enabled. Add this line on your "php.ini"')->print()->break(true);
+            ConsoleOutput::success(', but not enabled. Add this line on your "php.ini"')->print()->break(true);
             $this->configIniComponent($name);
         }
     }
@@ -209,52 +201,54 @@ class PeclExtension
      */
     private function configIniComponent(string $name): void
     {
+        $url = "https://github.com/brenno-duarte/pecl/tree/main/extensions-required-files/";
+
         switch ($name) {
-            case 'apcu':
-                $this->info('[apcu]')->print()->break();
-                $this->info('extension=apcu')->print()->break();
-                $this->info('apc.enabled=1')->print()->break();
-                $this->info('apc.shm_size=32M')->print()->break();
-                $this->info('apc.ttl=7200')->print()->break();
-                $this->info('apc.enable_cli=1')->print()->break();
-                $this->info('apc.serializer=php')->print();
+            case "apcu":
+                ConsoleOutput::info("[apcu]")->print()->break();
+                ConsoleOutput::info("extension=apcu")->print()->break();
+                ConsoleOutput::info("apc.enabled=1")->print()->break();
+                ConsoleOutput::info("apc.shm_size=32M")->print()->break();
+                ConsoleOutput::info("apc.ttl=7200")->print()->break();
+                ConsoleOutput::info("apc.enable_cli=1")->print()->break();
+                ConsoleOutput::info("apc.serializer=php")->print();
                 break;
 
-            case 'pcov':
-                $this->info('[pcov]')->print()->break();
-                $this->info('extension=pcov')->print()->break();
-                $this->info('pcov.enabled=1')->print()->break();
-                $this->info('pcov.directory=/path/to/your/source/directory')->print();
+            case "pcov":
+                ConsoleOutput::info("[pcov]")->print()->break();
+                ConsoleOutput::info("extension=pcov")->print()->break();
+                ConsoleOutput::info("pcov.enabled=1")->print()->break();
+                ConsoleOutput::info("pcov.directory=/path/to/your/source/directory")->print();
                 break;
 
-            case 'imagick':
-                $this->info('[imagick]')->print()->break();
-                $this->info('extension=imagick')->print()->break();
+            case "imagick":
+                ConsoleOutput::info("[imagick]")->print()->break();
+                ConsoleOutput::info("extension=imagick")->print()->break();
 
-                if (self::getOS() == 'Windows') {
+                if (self::getOS() == "Windows") {
                     echo PHP_EOL;
-                    $this->success('See this link https://github.com/brenno-duarte/php-pecl-extensions/tree/main/ext-files/imagick/imagick-' . $this->php_info['php_version'] . '-x64-' . $this->php_info['thread_safe'] . '/')->print()->break();
-                    $this->success('And copy all DLL files into the PHP installation directory (in the same directory as `php.exe`)')->print();
+                    ConsoleOutput::success("See this link " . $url . "imagick/imagick-" . $this->php_info["php_version"] . "-x64-" . $this->php_info["thread_safe"] . "/")->print()->break();
+                    ConsoleOutput::success("And copy all DLL files into the PHP installation directory (in the same directory as `php.exe`)")->print();
                 }
                 break;
 
-            case 'yac':
-                $this->info('[yac]')->print()->break();
-                $this->info('extension=yac')->print()->break();
-                $this->info('yac.enable_cli=1')->print();
+            case "yac":
+                ConsoleOutput::info("[yac]")->print()->break();
+                ConsoleOutput::info("extension=yac")->print()->break();
+                ConsoleOutput::info("yac.enable_cli=1")->print();
                 break;
 
-            case 'xhprof':
-                $this->info('[xhprof]')->print()->break();
-                $this->info('extension=xhprof')->print()->break();
-                $this->info('xhprof.output_dir=/tmp/xhprof')->print()->break();
-                $this->info('xhprof.sampling_interval=100000')->print()->break();
-                $this->info('xhprof.collect_additional_info=0')->print()->break(true);
-                $this->success('See aditional files in https://github.com/brenno-duarte/php-pecl-extensions/tree/main/ext-files/xhprof/')->print();
+            case "xhprof":
+                ConsoleOutput::info("[xhprof]")->print()->break();
+                ConsoleOutput::info("extension=xhprof")->print()->break();
+                ConsoleOutput::info("xhprof.output_dir=/tmp/xhprof")->print()->break();
+                ConsoleOutput::info("xhprof.sampling_interval=100000")->print()->break();
+                ConsoleOutput::info("xhprof.collect_additional_info=0")->print()->break(true);
+                ConsoleOutput::success("See aditional files in " . $url . "xhprof/")->print();
                 break;
 
             default:
-                $this->info('extension=' . $name)->print();
+                ConsoleOutput::info("extension=" . $name)->print();
                 break;
         }
     }
@@ -291,7 +285,7 @@ class PeclExtension
         $reader = new IniReader();
         $array = $reader->readFile($ini_file);
 
-        if (isset($array['PHP']['extension_dir'])) {
+        if (isset($array['PHP']['extension_dir']) && $array['PHP']['extension_dir'] != "ext") {
             $ext_dir = $array['PHP']['extension_dir'];
         } else {
             $ext_dir = dirname($ini_file) . DIRECTORY_SEPARATOR . 'ext' . DIRECTORY_SEPARATOR;

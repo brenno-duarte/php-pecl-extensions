@@ -1,6 +1,6 @@
 <?php
 
-namespace PeclPolyfill\Yaconf;
+namespace Yaconf;
 
 use Matomo\Ini\IniReader;
 
@@ -12,6 +12,8 @@ class Yaconf
     private static string $file_name = '';
 
     /**
+     * Get ini file manually
+     * 
      * @param string $file_name
      * 
      * @return void
@@ -22,6 +24,14 @@ class Yaconf
         self::$file_name = $file_name;
     }
 
+    /**
+     * Retrieve a item
+     *
+     * @param string $name Configuration key, the key looks like "filename.key", or "filename.sectionName,key".
+     * @param mixed|null $default_value if the key doesn't exists, Yaconf::get will return this as result.
+     * 
+     * @return mixed Returns configuration result(string or array) if the key exists, return default_value if not.
+     */
     public static function get(string $name, mixed $default_value = null): mixed
     {
         list($filename, $key) = explode('.', $name, 2);
@@ -34,6 +44,8 @@ class Yaconf
     }
 
     /**
+     * Determine if a item exists
+     * 
      * @param string $name
      * 
      * @return bool
