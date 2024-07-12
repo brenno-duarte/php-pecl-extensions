@@ -72,3 +72,7 @@ vendor/bin/pecl status memcached
 Some extensions, such as imagick, require the use of several other DLL's. These DLL's will be inside the `ext-files` folder.
 
 Keep in mind that this folder will not be downloaded when you add this component using Composer. You must download the files manually.
+
+# License
+
+MIT
