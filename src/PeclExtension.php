@@ -77,7 +77,7 @@ class PeclExtension
             ConsoleOutput::success($name . ": extension already installed")->print()->exit();
         }
 
-        $url = "https://raw.githubusercontent.com/brenno-duarte/php-pecl-extensions/main/ext/" .
+        $url = "https://raw.githubusercontent.com/brenno-duarte/pecl/main/extensions/" .
             $name . "/" . $name . "-" . $this->php_info['php_version'] . "-x64-" .
             $this->php_info['thread_safe'] . "/php_" . $name . ".dll";
 
