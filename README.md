@@ -29,7 +29,7 @@ This package has polyfills for the following extensions:
 - simdjson
 - sodium
 - ssdeep
-- statistic (partial)
+- statistic
 - uopz (partial)
 - var_representation
 - xdiff (partial)
